@@ -1,6 +1,6 @@
 #!/usr/bin/env node
-// caveman — UserPromptSubmit hook to track which caveman mode is active
-// Inspects user input for /caveman commands and writes mode to flag file
+// cavernoso — UserPromptSubmit hook to track which cavernoso mode is active
+// Inspects user input for /cavernoso commands and writes mode to flag file
 
 const fs = require('fs');
 const path = require('path');
@@ -17,40 +17,38 @@ process.stdin.on('end', () => {
     const data = JSON.parse(input);
     const prompt = (data.prompt || '').trim().toLowerCase();
 
-    // Natural language activation — EN and pt-BR.
-    // EN: "activate caveman", "turn on caveman mode", "talk like caveman"
-    // pt-BR: "ativar cavernoso", "ligar modo cavernoso", "fala como cavernoso"
-    const EN_ACTIVATE = /\b(activate|enable|turn on|start|talk like)\b.*\b(caveman|cavernoso)\b/i;
-    const EN_ACTIVATE_REV = /\b(caveman|cavernoso)\b.*\b(mode|activate|enable|turn on|start)\b/i;
-    const PT_ACTIVATE = /\b(ativa|ativar|liga|ligar|ativa o|ligar o|fala como|falar como|entra no modo)\b.*\b(cavernoso|caveman)\b/i;
-    const PT_ACTIVATE_REV = /\b(cavernoso|caveman)\b.*\b(modo|ativa|ativar|liga|ligar)\b/i;
+    // Natural language activation — pt-BR only (foco do fork).
+    // pt-BR: "ativa cavernoso", "liga modo cavernoso", "fala como cavernoso", "modo cavernoso"
+    const PT_DEACTIVATE = /\b(para|parar|desliga|desligar|desativa|desativar|sai do modo)\b/i;
+    const PT_ACTIVATE = /\b(ativa|ativar|liga|ligar|fala como|falar como|entra no modo)\b.*\bcavernoso\b/i;
+    const PT_ACTIVATE_REV = /\bcavernoso\b.*\b(modo|ativa|ativar|liga|ligar)\b/i;
+    const PT_MODO_CAVERNOSO = /\bmodo cavernoso\b/i;
 
-    if (EN_ACTIVATE.test(prompt) || EN_ACTIVATE_REV.test(prompt) ||
-        PT_ACTIVATE.test(prompt) || PT_ACTIVATE_REV.test(prompt)) {
-      if (!/\b(stop|disable|turn off|deactivate|para|desliga|desligar|desativa|desativar|sai do modo)\b/i.test(prompt)) {
-        const mode = getDefaultMode();
-        if (mode !== 'off') {
-          safeWriteFlag(flagPath, mode);
-        }
+    if ((PT_ACTIVATE.test(prompt) || PT_ACTIVATE_REV.test(prompt) || PT_MODO_CAVERNOSO.test(prompt))
+        && !PT_DEACTIVATE.test(prompt)) {
+      const mode = getDefaultMode();
+      if (mode !== 'off') {
+        safeWriteFlag(flagPath, mode);
       }
     }
 
-    // Match /caveman commands
-    if (prompt.startsWith('/caveman')) {
+    // Match /cavernoso commands
+    if (prompt.startsWith('/cavernoso')) {
       const parts = prompt.split(/\s+/);
-      const cmd = parts[0]; // /caveman, /caveman-commit, /caveman-review, etc.
+      const cmd = parts[0]; // /cavernoso, /cavernoso-commit, /cavernoso-review, etc.
       const arg = parts[1] || '';
 
       let mode = null;
 
-      if (cmd === '/caveman-commit') {
+      if (cmd === '/cavernoso-commit') {
         mode = 'commit';
-      } else if (cmd === '/caveman-review') {
+      } else if (cmd === '/cavernoso-review') {
         mode = 'review';
-      } else if (cmd === '/caveman-compress' || cmd === '/caveman:caveman-compress') {
+      } else if (cmd === '/cavernoso-compress' || cmd === '/cavernoso:compress' || cmd === '/cavernoso:cavernoso-compress') {
         mode = 'compress';
-      } else if (cmd === '/caveman' || cmd === '/caveman:caveman') {
-        if (arg === 'lite') mode = 'lite';
+      } else if (cmd === '/cavernoso' || cmd === '/cavernoso:cavernoso') {
+        if (arg === 'leve') mode = 'leve';
+        else if (arg === 'total') mode = 'total';
         else if (arg === 'ultra') mode = 'ultra';
         else mode = getDefaultMode();
       }
@@ -62,23 +60,23 @@ process.stdin.on('end', () => {
       }
     }
 
-    // Detect deactivation — EN + pt-BR, natural language and slash commands
-    if (/\b(stop|disable|deactivate|turn off)\b.*\b(caveman|cavernoso)\b/i.test(prompt) ||
-        /\b(caveman|cavernoso)\b.*\b(stop|disable|deactivate|turn off)\b/i.test(prompt) ||
-        /\b(para|parar|desliga|desligar|desativa|desativar|sai do modo)\b.*\b(caveman|cavernoso)\b/i.test(prompt) ||
-        /\b(caveman|cavernoso)\b.*\b(para|parar|desliga|desligar|desativa|desativar)\b/i.test(prompt) ||
-        /\bnormal mode\b/i.test(prompt) ||
-        /\bmodo normal\b/i.test(prompt)) {
+    // Detect deactivation — pt-BR natural language.
+    // Triggers: "para", "para cavernoso", "desliga", "desliga cavernoso",
+    // "desativa cavernoso", "modo normal", "sai do modo cavernoso".
+    if (/\b(para|parar|desliga|desligar|desativa|desativar|sai do modo)\b.*\bcavernoso\b/i.test(prompt) ||
+        /\bcavernoso\b.*\b(para|parar|desliga|desligar|desativa|desativar)\b/i.test(prompt) ||
+        /\bmodo normal\b/i.test(prompt) ||
+        /^\s*para\s*$/i.test(prompt)) {
       try { fs.unlinkSync(flagPath); } catch (e) {}
     }
 
-    // Per-turn reinforcement: emit a structured reminder when caveman is active.
+    // Per-turn reinforcement: emit a structured reminder when cavernoso is active.
     // The SessionStart hook injects the full ruleset once, but models lose it
     // when other plugins inject competing style instructions every turn.
-    // This keeps caveman visible in the model's attention on every user message.
+    // This keeps cavernoso visible in the model's attention on every user message.
     //
     // Skip independent modes (commit, review, compress) — they have their own
-    // skill behavior and the base caveman rules would conflict.
+    // skill behavior and the base cavernoso rules would conflict.
     // readFlag enforces symlink-safe read + size cap + VALID_MODES whitelist.
     // If the flag is missing, corrupted, oversized, or a symlink pointing at
     // something like ~/.ssh/id_rsa, readFlag returns null and we emit nothing

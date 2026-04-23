@@ -23,11 +23,11 @@ MODE=$(printf '%s' "$MODE" | tr -cd 'a-z0-9-')
 
 # Whitelist. Anything else → render nothing rather than echo attacker bytes.
 case "$MODE" in
-  off|lite|full|ultra|commit|review|compress) ;;
+  off|leve|total|ultra|commit|review|compress) ;;
   *) exit 0 ;;
 esac
 
-if [ -z "$MODE" ] || [ "$MODE" = "full" ]; then
+if [ -z "$MODE" ] || [ "$MODE" = "total" ]; then
   printf '\033[38;5;172m[CAVERNOSO]\033[0m'
 else
   SUFFIX=$(printf '%s' "$MODE" | tr '[:lower:]' '[:upper:]')

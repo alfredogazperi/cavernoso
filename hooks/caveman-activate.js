@@ -40,19 +40,19 @@ safeWriteFlag(flagPath, mode);
 const INDEPENDENT_MODES = new Set(['commit', 'review', 'compress']);
 
 if (INDEPENDENT_MODES.has(mode)) {
-  process.stdout.write('MODO CAVERNOSO ATIVO — nível: ' + mode + '. Comportamento definido pela skill /caveman-' + mode + '.');
+  process.stdout.write('MODO CAVERNOSO ATIVO — nível: ' + mode + '. Comportamento definido pela skill /cavernoso-' + mode + '.');
   process.exit(0);
 }
 
 const modeLabel = mode;
 
-// Read SKILL.md — the single source of truth for caveman behavior.
-// Plugin installs: __dirname = <plugin_root>/hooks/, SKILL.md at <plugin_root>/skills/caveman/SKILL.md
+// Read SKILL.md — the single source of truth for cavernoso behavior.
+// Plugin installs: __dirname = <plugin_root>/hooks/, SKILL.md at <plugin_root>/skills/cavernoso/SKILL.md
 // Standalone installs: __dirname = $CLAUDE_CONFIG_DIR/hooks/, SKILL.md won't exist — falls back to hardcoded rules.
 let skillContent = '';
 try {
   skillContent = fs.readFileSync(
-    path.join(__dirname, '..', 'skills', 'caveman', 'SKILL.md'), 'utf8'
+    path.join(__dirname, '..', 'skills', 'cavernoso', 'SKILL.md'), 'utf8'
   );
 } catch (e) { /* standalone install — will use fallback below */ }
 
@@ -96,7 +96,7 @@ if (skillContent) {
     'Responder seco que nem cavernoso inteligente. Substância técnica fica toda. Só enrolação morre.\n\n' +
     '## Persistência\n\n' +
     'ATIVO TODA RESPOSTA. Não volta depois de muitos turnos. Sem deriva pra enrolação. Continua ativo se incerto. Desliga só: "para cavernoso" / "modo normal".\n\n' +
-    'Nível atual: **' + modeLabel + '**. Trocar: `/caveman lite|full|ultra`.\n\n' +
+    'Nível atual: **' + modeLabel + '**. Trocar: `/cavernoso leve|total|ultra`.\n\n' +
     '## Regras\n\n' +
     'Cortar: artigos (o/a/os/as/um/uma), filler (basicamente/simplesmente/na verdade/literalmente/realmente), cortesias (claro/com certeza/sem dúvida/fico feliz), hedging (talvez/pode ser que/acho que). ' +
     'Fragmentos OK. Sinônimos curtos (usar não utilizar, ver não visualizar, achar não encontrar). Termos técnicos exatos. Blocos de código intocados. Erros citados exato.\n\n' +

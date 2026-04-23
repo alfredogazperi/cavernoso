@@ -1,10 +1,10 @@
 ---
-name: caveman-review
+name: cavernoso-review
 description: >
   Comentários de review de código ultracomprimidos. Corta ruído de feedback em PR mantendo
   o sinal acionável. Cada comentário em uma linha: localização, problema, fix. Usar quando
   usuário disser "review esse PR", "code review", "revisa o diff", "/review" ou invocar
-  /caveman-review. Ativa automaticamente ao revisar pull requests.
+  /cavernoso-review. Ativa automaticamente ao revisar pull requests.
 ---
 
 Escrever comentários de review secos e acionáveis. Uma linha por achado. Localização, problema, fix. Sem enrolação inicial.
@@ -52,4 +52,4 @@ Sair do modo seco para: achados de segurança (bugs classe CVE precisam de expli
 
 ## Limites
 
-Só review — não escreve o fix, não aprova / request-changes, não roda linters. Saída pronta pra colar no PR. "parar caveman-review" ou "modo normal": volta ao estilo de review verboso.
+Só review — não escreve o fix, não aprova / request-changes, não roda linters. Saída pronta pra colar no PR. "parar cavernoso-review" ou "modo normal": volta ao estilo de review verboso.

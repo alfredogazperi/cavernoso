@@ -14,7 +14,7 @@ const path = require('path');
 const os = require('os');
 
 const VALID_MODES = [
-  'off', 'lite', 'full', 'ultra',
+  'off', 'leve', 'total', 'ultra',
   'commit', 'review', 'compress'
 ];
 
@@ -54,7 +54,7 @@ function getDefaultMode() {
   }
 
   // 3. Default
-  return 'full';
+  return 'total';
 }
 
 // Symlink-safe flag file write.

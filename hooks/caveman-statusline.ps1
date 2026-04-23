@@ -27,11 +27,11 @@ try {
 $Mode = $Mode.ToLowerInvariant()
 $Mode = ($Mode -replace '[^a-z0-9-]', '')
 
-$Valid = @('off','lite','full','ultra','commit','review','compress')
+$Valid = @('off','leve','total','ultra','commit','review','compress')
 if (-not ($Valid -contains $Mode)) { exit 0 }
 
 $Esc = [char]27
-if ([string]::IsNullOrEmpty($Mode) -or $Mode -eq "full") {
+if ([string]::IsNullOrEmpty($Mode) -or $Mode -eq "total") {
     [Console]::Write("${Esc}[38;5;172m[CAVERNOSO]${Esc}[0m")
 } else {
     $Suffix = $Mode.ToUpperInvariant()

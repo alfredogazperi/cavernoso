@@ -1,4 +1,4 @@
-# CLAUDE.md — caveman
+# CLAUDE.md — cavernoso
 
 ## README é artefato de produto
 
@@ -29,12 +29,12 @@ Caveman faz agentes de IA de código responderem em prosa estilo caveman comprim
 
 | Arquivo | O que controla |
 |------|-----------------|
-| `skills/caveman/SKILL.md` | Comportamento do caveman: níveis de intensidade, regras, auto-clareza, persistência. Único arquivo a editar para mudanças de comportamento. |
-| `rules/caveman-activate.md` | Corpo da regra de auto-ativação always-on. CI injeta nos arquivos de rule de Cursor, Windsurf, Cline, Copilot. Edite aqui, não nas cópias específicas por agente. |
-| `skills/caveman-commit/SKILL.md` | Comportamento de mensagem de commit do caveman. Skill totalmente independente. |
-| `skills/caveman-review/SKILL.md` | Comportamento de code review do caveman. Skill totalmente independente. |
-| `skills/caveman-help/SKILL.md` | Cartão de referência rápida. Display one-shot, não um modo persistente. |
-| `caveman-compress/SKILL.md` | Comportamento da sub-skill compress. |
+| `skills/cavernoso/SKILL.md` | Comportamento do cavernoso: níveis de intensidade, regras, auto-clareza, persistência. Único arquivo a editar para mudanças de comportamento. |
+| `rules/caveman-activate.md` | Corpo da regra de auto-ativação always-on (upstream — usado pelo CI de sync para outros agentes; não afeta plugin do Claude Code). |
+| `skills/cavernoso-commit/SKILL.md` | Comportamento de mensagem de commit do cavernoso. Skill totalmente independente. |
+| `skills/cavernoso-review/SKILL.md` | Comportamento de code review do cavernoso. Skill totalmente independente. |
+| `skills/cavernoso-help/SKILL.md` | Cartão de referência rápida. Display one-shot, não um modo persistente. |
+| `skills/cavernoso-compress/SKILL.md` | Comportamento da sub-skill compress. |
 
 ### Auto-gerado / auto-sincronizado — não edite diretamente
 
@@ -104,23 +104,24 @@ Falha silenciosa em todos erros de filesystem — nunca bloqueia o início da se
 
 Lê JSON do stdin. Três responsabilidades:
 
-**1. Ativação por slash-command.** Se o prompt começa com `/caveman`, escreve modo no arquivo de flag via `safeWriteFlag`:
-- `/caveman` → padrão configurado (veja `caveman-config.js`, default `full`)
-- `/caveman lite` → `lite`
-- `/caveman ultra` → `ultra`
-- `/caveman-commit` → `commit`
-- `/caveman-review` → `review`
-- `/caveman-compress` → `compress`
+**1. Ativação por slash-command.** Se o prompt começa com `/cavernoso`, escreve modo no arquivo de flag via `safeWriteFlag`:
+- `/cavernoso` → padrão configurado (veja `caveman-config.js`, default `total`)
+- `/cavernoso leve` → `leve`
+- `/cavernoso total` → `total`
+- `/cavernoso ultra` → `ultra`
+- `/cavernoso-commit` → `commit`
+- `/cavernoso-review` → `review`
+- `/cavernoso:compress` → `compress`
 
-**2. Ativação/desativação por linguagem natural.** Casa frases como "activate caveman", "turn on caveman mode", "talk like caveman" e escreve o modo padrão configurado. Casa "stop caveman", "disable caveman", "normal mode", "deactivate caveman" etc. e deleta o arquivo de flag. README promete esses triggers, o hook executa.
+**2. Ativação/desativação por linguagem natural (pt-BR).** Casa frases como "ativa cavernoso", "liga modo cavernoso", "fala como cavernoso", "modo cavernoso" e escreve o modo padrão configurado. Casa "para cavernoso", "desliga cavernoso", "desativa cavernoso", "modo normal" etc. e deleta o arquivo de flag. Triggers em inglês do upstream foram removidos — o foco do fork é pt-BR.
 
 **3. Reforço por turno.** Quando a flag está setada para um modo não-independente (ou seja, não `commit`/`review`/`compress`), emite um pequeno reminder JSON `hookSpecificOutput` pro modelo manter o estilo caveman depois que outros plugins injetam instruções competindo no meio da conversa. O ruleset completo ainda vem do SessionStart — isto é só uma âncora de atenção.
 
 ### `hooks/caveman-statusline.sh` — Badge de statusline
 
 Lê arquivo de flag em `$CLAUDE_CONFIG_DIR/.caveman-active`. Imprime string de badge colorida pra statusline do Claude Code:
-- `full` ou vazio → `[CAVEMAN]` (laranja)
-- qualquer outra coisa → `[CAVEMAN:<MODE_UPPERCASED>]` (laranja)
+- `total` ou vazio → `[CAVERNOSO]` (laranja)
+- qualquer outra coisa → `[CAVERNOSO:<MODE_UPPERCASED>]` (laranja)
 
 Configurado em `settings.json` sob `statusLine.command`. Contraparte PowerShell em `hooks/caveman-statusline.ps1` para Windows.
 
@@ -140,19 +141,19 @@ Skills = arquivos Markdown com frontmatter YAML consumidos pelo sistema de skill
 
 ### Níveis de intensidade
 
-Definidos em `skills/caveman/SKILL.md`. Três níveis: `lite`, `full` (padrão), `ultra`. Persiste até mudar ou sessão acabar.
+Definidos em `skills/cavernoso/SKILL.md`. Três níveis: `leve`, `total` (padrão), `ultra`. Persiste até mudar ou sessão acabar.
 
 ### Regra de auto-clareza
 
 Caveman cai pra prosa normal em: avisos de segurança, confirmações de ação irreversível, sequências multi-passo onde ambiguidade de fragmento arrisca má leitura, usuário confuso ou repetindo pergunta. Retoma depois. Definido na skill — preserve em qualquer edição de SKILL.md.
 
-### caveman-compress
+### cavernoso-compress
 
-Sub-skill em `caveman-compress/SKILL.md`. Recebe caminho de arquivo, comprime prosa para estilo caveman, escreve no caminho original, salva backup em `<filename>.original.md`. Valida headings, blocos de código, URLs, caminhos de arquivo, comandos preservados. Retry até 2 vezes em falha com patches pontuais apenas. Requer Python 3.10+.
+Sub-skill em `skills/cavernoso-compress/SKILL.md`. Recebe caminho de arquivo, comprime prosa para estilo cavernoso, escreve no caminho original, salva backup em `<filename>.original.md`. Valida headings, blocos de código, URLs, caminhos de arquivo, comandos preservados. Retry até 2 vezes em falha com patches pontuais apenas. Requer Python 3.10+.
 
-### caveman-commit / caveman-review
+### cavernoso-commit / cavernoso-review
 
-Skills independentes em `skills/caveman-commit/SKILL.md` e `skills/caveman-review/SKILL.md`. Ambas têm frontmatter próprio de `description` e `name` pra carregarem independentemente. caveman-commit: Conventional Commits, assunto ≤50 chars. caveman-review: comentários em uma linha no formato `L<linha>: <severidade> <problema>. <correção>.`.
+Skills independentes em `skills/cavernoso-commit/SKILL.md` e `skills/cavernoso-review/SKILL.md`. Ambas têm frontmatter próprio de `description` e `name` pra carregarem independentemente. cavernoso-commit: Conventional Commits, assunto ≤50 chars. cavernoso-review: comentários em uma linha no formato `L<linha>: <severidade> <problema>. <correção>.`.
 
 ---
 
@@ -202,7 +203,7 @@ Para reproduzir: `uv run python benchmarks/run.py` (precisa de `ANTHROPIC_API_KE
 
 ## Regras-chave para agentes trabalhando aqui
 
-- Edite `skills/caveman/SKILL.md` para mudanças de comportamento. Nunca edite cópias sincronizadas.
+- Edite `skills/cavernoso/SKILL.md` para mudanças de comportamento. Nunca edite cópias sincronizadas.
 - Edite `rules/caveman-activate.md` para mudanças de regra de auto-ativação. Nunca edite cópias de rule específicas por agente.
 - README é o arquivo mais importante para impacto voltado ao usuário. Otimize para leitores não-técnicos. Preserve a voz caveman.
 - Números de benchmark e eval precisam ser reais. Nunca fabrique nem estime.

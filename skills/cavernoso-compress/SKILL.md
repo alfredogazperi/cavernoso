@@ -1,14 +1,14 @@
 ---
-name: compress
+name: cavernoso-compress
 description: >
   Comprimir arquivos de memória em linguagem natural (CLAUDE.md, todos, preferências) para
   o formato cavernoso e economizar tokens de input. Preserva toda substância técnica,
   código, URLs e estrutura. A versão comprimida sobrescreve o original.
   Backup legível salvo como ARQUIVO.original.md. Otimizado para pt-BR.
-  Trigger: /caveman:compress <caminho> ou "comprimir arquivo de memória"
+  Trigger: /cavernoso:compress <caminho> ou "comprimir arquivo de memória"
 ---
 
-# Caveman Compress (pt-BR)
+# Cavernoso Compress (pt-BR)
 
 ## Propósito
 
@@ -16,15 +16,15 @@ Comprimir arquivos em linguagem natural (CLAUDE.md, todos, preferências) para f
 
 ## Trigger
 
-`/caveman:compress <caminho>` ou quando usuário pede pra comprimir um arquivo de memória.
+`/cavernoso:compress <caminho>` ou quando usuário pede pra comprimir um arquivo de memória.
 
 ## Processo
 
-1. Scripts de compressão vivem em `caveman-compress/scripts/` (ao lado deste SKILL.md). Se o caminho não estiver disponível, procurar `caveman-compress/scripts/__main__.py`.
+1. Scripts de compressão vivem em `skills/cavernoso-compress/scripts/` (ao lado deste SKILL.md). Se o caminho não estiver disponível, procurar `scripts/__main__.py`.
 
 2. Rodar:
 
-cd caveman-compress && python3 -m scripts <caminho_absoluto>
+cd skills/cavernoso-compress && python3 -m scripts <caminho_absoluto>
 
 3. O CLI vai:
 - detectar tipo de arquivo (sem tokens)

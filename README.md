@@ -31,10 +31,10 @@ Plugin do [Claude Code](https://docs.anthropic.com/en/docs/claude-code) que faz 
 
 Inclui também:
 
-- **[`caveman-compress`](#caveman-compress)** — comprime seus `CLAUDE.md` e notas pra o Claude ler menos token toda sessão (~46% a menos na leitura).
-- **[`caveman-commit`](#caveman-commit)** — mensagens de commit Conventional Commits, curtas, foco no *por quê*.
-- **[`caveman-review`](#caveman-review)** — code review em uma linha por achado, com severidade.
-- **[`caveman-help`](#caveman-help)** — cartão de referência dos modos e comandos.
+- **[`cavernoso-compress`](#cavernoso-compress)** — comprime seus `CLAUDE.md` e notas pra o Claude ler menos token toda sessão (~46% a menos na leitura).
+- **[`cavernoso-commit`](#cavernoso-commit)** — mensagens de commit Conventional Commits, curtas, foco no *por quê*.
+- **[`cavernoso-review`](#cavernoso-review)** — code review em uma linha por achado, com severidade.
+- **[`cavernoso-help`](#cavernoso-help)** — cartão de referência dos modos e comandos.
 
 Fork pt-BR de [caveman](https://github.com/JuliusBrussee/caveman) por Julius Brussee. Traduzido e adaptado pra português brasileiro — com pré-processamento determinístico que remove pleonasmos (*subir pra cima*, *entrar pra dentro*), expressões vazias (*vale a pena mencionar que*) e filler antes mesmo de chamar o LLM.
 
@@ -56,8 +56,9 @@ Reinicia o Claude Code. Pronto. Hooks carregam sozinhos, statusline mostra `[CAV
 
 ### Ativar/desativar por sessão
 
-- Ativa: `/caveman`, "fala como cavernoso", "ativa cavernoso", "modo cavernoso"
-- Desativa: "para", "desliga cavernoso", "modo normal"
+- Ativa: `/cavernoso`, "fala como cavernoso", "ativa cavernoso", "modo cavernoso", "liga cavernoso"
+- Nível: `/cavernoso leve`, `/cavernoso total`, `/cavernoso ultra` (ou "modo leve", "modo total", "modo ultra")
+- Desativa: "para", "para cavernoso", "desliga", "desliga cavernoso", "modo normal"
 
 ## Antes / Depois
 
@@ -118,20 +119,20 @@ Reinicia o Claude Code. Pronto. Hooks carregam sozinhos, statusline mostra `[CAV
 
 | Nível | Trigger | Exemplo |
 |---|---|---|
-| **Lite** | `/caveman lite` | "Seu componente re-renderiza porque cria nova referência de objeto. Envolve em `useMemo`." |
-| **Full** | `/caveman full` | "Prop objeto inline = ref nova = re-render. Envolve em `useMemo`." |
-| **Ultra** | `/caveman ultra` | "Prop obj inline → ref nova → re-render. `useMemo`." |
+| **Leve** | `/cavernoso leve` | "Seu componente re-renderiza porque cria nova referência de objeto. Envolve em `useMemo`." |
+| **Total** | `/cavernoso total` | "Prop objeto inline = ref nova = re-render. Envolve em `useMemo`." |
+| **Ultra** | `/cavernoso ultra` | "Prop obj inline → ref nova → re-render. `useMemo`." |
 
 Nível persiste até trocar ou terminar a sessão.
 
 ## Skills
 
-### caveman-compress
+### cavernoso-compress
 
-`/caveman:compress <arquivo>` — reescreve seu `CLAUDE.md` em estilo cavernoso pro Claude ler menos token toda sessão, sem você perder o original legível.
+`/cavernoso:compress <arquivo>` — reescreve seu `CLAUDE.md` em estilo cavernoso pro Claude ler menos token toda sessão, sem você perder o original legível.
 
 ```
-/caveman:compress CLAUDE.md
+/cavernoso:compress CLAUDE.md
 ```
 
 ```
@@ -148,9 +149,9 @@ Blocos de código, URLs, caminhos, comandos, headers, tabelas e frontmatter pass
 
 Ver [`caveman-compress/README.md`](caveman-compress/README.md) e [nota de segurança](./caveman-compress/SECURITY.md).
 
-### caveman-commit
+### cavernoso-commit
 
-`/caveman-commit` — gera mensagem em [Conventional Commits](https://www.conventionalcommits.org/), assunto ≤50 chars, explica o *por quê*.
+`/cavernoso-commit` — gera mensagem em [Conventional Commits](https://www.conventionalcommits.org/), assunto ≤50 chars, explica o *por quê*.
 
 Exemplo de saída real:
 
@@ -161,9 +162,9 @@ Token exato no segundo de expirar era aceito como válido,
 causando requests 401 intermitentes logo após refresh.
 ```
 
-### caveman-review
+### cavernoso-review
 
-`/caveman-review` — code review em uma linha por achado. Formato: `L<linha>: <severidade> <problema>. <fix>.`
+`/cavernoso-review` — code review em uma linha por achado. Formato: `L<linha>: <severidade> <problema>. <fix>.`
 
 ```
 L42: bug: user pode ser null aqui. Adicionar guard.
@@ -174,9 +175,9 @@ L130: q: por que 30s de timeout e não 5?
 
 Severidades: `bug`, `risk`, `nit`, `q`. Sem elogio, sem "ótimo trabalho!".
 
-### caveman-help
+### cavernoso-help
 
-`/caveman-help` — cartão de referência com todos os modos, comandos, gatilhos e skills. Abre quando não lembrar.
+`/cavernoso-help` — cartão de referência com todos os modos, comandos, gatilhos e skills. Abre quando não lembrar.
 
 ## Pré-processamento pt-BR
 
@@ -196,6 +197,17 @@ O `preprocess.py` trata de forma determinística (sem LLM) as seguintes classes 
 | Filler isolado | *na verdade,* | → remove |
 
 Regiões protegidas: blocos de código, código inline, URLs, links markdown, caminhos, frontmatter YAML, tabelas pipe. Nada técnico é tocado.
+
+### Base linguística
+
+As listas de redundâncias, pleonasmos, filler e expressões vazias não são arbitrárias — vêm de uma pesquisa prévia cruzando referências pt-BR estabelecidas:
+
+- **[Manual de Redação da Presidência da República](https://www4.planalto.gov.br/centrodeestudos/assuntos/manual-de-redacao-da-presidencia-da-republica/manual-de-redacao.pdf)** — concisão oficial da comunicação governamental
+- **BYU Pathway — "Escrever de Forma Concisa"** — cinco regras de concisão formais (pleonasmo, modificadores fracos, filler, expressões sem significado, verbos desnecessários)
+- **Referências de pleonasmos da linguística brasileira** — lista consolidada de pleonasmos clássicos (*há tempos atrás*, *subir para cima*, *encarar de frente*)
+- **NLTK stopwords pt-BR + corpus de estilo informal** — para identificar filler coloquial e hedging
+
+A metodologia em três camadas (remoção determinística → prompt LLM → validação) vem do [plano de pesquisa](https://github.com/alfredogazperi/cavernoso/tree/pt-br) feito antes de forkar.
 
 ## Sobre
 

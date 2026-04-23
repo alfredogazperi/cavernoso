@@ -136,7 +136,7 @@ def verify_powershell_static() -> None:
         "powershell -ExecutionPolicy Bypass -File" in install_text,
         "install.ps1 missing PowerShell statusline command",
     )
-    ensure("[CAVEMAN" in statusline_text, "caveman-statusline.ps1 missing badge output")
+    ensure("[CAVERNOSO" in statusline_text, "caveman-statusline.ps1 missing badge output")
 
     print("Windows install path statically wired")
 
@@ -225,39 +225,39 @@ def verify_hook_install_flow() -> None:
             ["node", "hooks/caveman-activate.js"],
             env={"HOME": str(home)},
         )
-        ensure("CAVEMAN MODE ACTIVE." in activate.stdout, "activation output missing caveman banner")
-        ensure("STATUSLINE SETUP NEEDED" not in activate.stdout, "activation should stay quiet when custom statusline exists")
-        ensure((claude_dir / ".caveman-active").read_text() == "full", "activation flag should default to full")
+        ensure("MODO CAVERNOSO ATIVO" in activate.stdout, "activation output missing cavernoso banner")
+        ensure("STATUSLINE PRECISA SER CONFIGURADA" not in activate.stdout, "activation should stay quiet when custom statusline exists")
+        ensure((claude_dir / ".caveman-active").read_text() == "total", "activation flag should default to total")
 
         # Test configurable default mode via CAVEMAN_DEFAULT_MODE env var
         activate_custom = run(
             ["node", "hooks/caveman-activate.js"],
             env={"HOME": str(home), "CAVEMAN_DEFAULT_MODE": "ultra"},
         )
-        ensure("CAVEMAN MODE ACTIVE." in activate_custom.stdout, "activation with custom default missing banner")
+        ensure("MODO CAVERNOSO ATIVO" in activate_custom.stdout, "activation with custom default missing banner")
         ensure((claude_dir / ".caveman-active").read_text() == "ultra", "CAVEMAN_DEFAULT_MODE=ultra should set flag to ultra")
         # Test "off" mode — activation skipped, flag removed
         activate_off = run(
             ["node", "hooks/caveman-activate.js"],
             env={"HOME": str(home), "CAVEMAN_DEFAULT_MODE": "off"},
         )
-        ensure("CAVEMAN MODE ACTIVE." not in activate_off.stdout, "off mode should not emit caveman banner")
+        ensure("MODO CAVERNOSO ATIVO" not in activate_off.stdout, "off mode should not emit cavernoso banner")
         ensure(not (claude_dir / ".caveman-active").exists(), "off mode should remove flag file")
 
-        # Test mode tracker with /caveman when default is off — should NOT write flag
+        # Test mode tracker with /cavernoso when default is off — should NOT write flag
         subprocess.run(
             ["node", "hooks/caveman-mode-tracker.js"],
             cwd=ROOT,
             env={**os.environ, "HOME": str(home), "CAVEMAN_DEFAULT_MODE": "off"},
             text=True,
-            input='{"prompt":"/caveman"}',
+            input='{"prompt":"/cavernoso"}',
             capture_output=True,
             check=True,
         )
-        ensure(not (claude_dir / ".caveman-active").exists(), "/caveman with off default should not write flag")
+        ensure(not (claude_dir / ".caveman-active").exists(), "/cavernoso with off default should not write flag")
 
-        # Reset back to full for subsequent tests
-        (claude_dir / ".caveman-active").write_text("full")
+        # Reset back to total for subsequent tests
+        (claude_dir / ".caveman-active").write_text("total")
 
         run(
             ["node", "hooks/caveman-mode-tracker.js"],
@@ -270,7 +270,7 @@ def verify_hook_install_flow() -> None:
             cwd=ROOT,
             env={**os.environ, "HOME": str(home)},
             text=True,
-            input='{"prompt":"/caveman ultra"}',
+            input='{"prompt":"/cavernoso ultra"}',
             capture_output=True,
             check=True,
         )
@@ -282,18 +282,18 @@ def verify_hook_install_flow() -> None:
             cwd=ROOT,
             env={**os.environ, "HOME": str(home)},
             text=True,
-            input='{"prompt":"normal mode"}',
+            input='{"prompt":"modo normal"}',
             capture_output=True,
             check=True,
         )
-        ensure(not (claude_dir / ".caveman-active").exists(), "normal mode should remove flag file")
+        ensure(not (claude_dir / ".caveman-active").exists(), "modo normal should remove flag file")
 
         (claude_dir / ".caveman-active").write_text("ultra")
         statusline = run(
             ["bash", "hooks/caveman-statusline.sh"],
             env={"HOME": str(home)},
         )
-        ensure("[CAVEMAN:ULTRA]" in statusline.stdout, "statusline badge output mismatch")
+        ensure("[CAVERNOSO:ULTRA]" in statusline.stdout, "statusline badge output mismatch")
 
         reinstall = run(["bash", "hooks/install.sh"], env={"HOME": str(home)})
         ensure("Nothing to do" in reinstall.stdout, "install.sh should be idempotent")
@@ -310,7 +310,7 @@ def verify_hook_install_flow() -> None:
         settings = read_json(claude_dir / "settings.json")
         ensure("statusLine" in settings, "fresh install should configure statusline")
         activate = run(["node", "hooks/caveman-activate.js"], env={"HOME": str(home)})
-        ensure("STATUSLINE SETUP NEEDED" not in activate.stdout, "fresh install should not nudge for statusline")
+        ensure("STATUSLINE PRECISA SER CONFIGURADA" not in activate.stdout, "fresh install should not nudge for statusline")
         run(["bash", "hooks/uninstall.sh"], env={"HOME": str(home)})
         ensure(read_json(claude_dir / "settings.json") == {}, "fresh uninstall should leave empty settings")
 

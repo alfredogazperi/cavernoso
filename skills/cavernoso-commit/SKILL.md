@@ -1,10 +1,10 @@
 ---
-name: caveman-commit
+name: cavernoso-commit
 description: >
   Gerador de mensagens de commit ultracomprimidas. Corta ruído mantendo intenção e motivo.
   Formato Conventional Commits. Subject ≤50 chars, body só quando o "porquê" não está óbvio.
   Usar quando usuário disser "escreve um commit", "mensagem de commit", "gera commit",
-  "/commit" ou invocar /caveman-commit. Ativa automaticamente ao fazer staging de mudanças.
+  "/commit" ou invocar /cavernoso-commit. Ativa automaticamente ao fazer staging de mudanças.
 ---
 
 Escrever mensagens de commit secas e exatas. Formato Conventional Commits. Sem enrolação. Porquê acima do quê.
@@ -62,4 +62,4 @@ Sempre incluir body para: breaking changes, fixes de segurança, migrações de 
 
 ## Limites
 
-Só gera a mensagem. Não roda `git commit`, não faz staging, não amend. Saída como bloco de código pronto pra colar. "parar caveman-commit" ou "modo normal": volta ao estilo de commit verboso.
+Só gera a mensagem. Não roda `git commit`, não faz staging, não amend. Saída como bloco de código pronto pra colar. "parar cavernoso-commit" ou "modo normal": volta ao estilo de commit verboso.
