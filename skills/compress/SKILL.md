@@ -1,111 +1,126 @@
 ---
 name: compress
 description: >
-  Compress natural language memory files (CLAUDE.md, todos, preferences) into caveman format
-  to save input tokens. Preserves all technical substance, code, URLs, and structure.
-  Compressed version overwrites the original file. Human-readable backup saved as FILE.original.md.
-  Trigger: /caveman:compress <filepath> or "compress memory file"
+  Comprimir arquivos de memória em linguagem natural (CLAUDE.md, todos, preferências) para
+  o formato cavernoso e economizar tokens de input. Preserva toda substância técnica,
+  código, URLs e estrutura. A versão comprimida sobrescreve o original.
+  Backup legível salvo como ARQUIVO.original.md. Otimizado para pt-BR.
+  Trigger: /caveman:compress <caminho> ou "comprimir arquivo de memória"
 ---
 
-# Caveman Compress
+# Caveman Compress (pt-BR)
 
-## Purpose
+## Propósito
 
-Compress natural language files (CLAUDE.md, todos, preferences) into caveman-speak to reduce input tokens. Compressed version overwrites original. Human-readable backup saved as `<filename>.original.md`.
+Comprimir arquivos em linguagem natural (CLAUDE.md, todos, preferências) para fala cavernosa pt-BR e reduzir tokens de input. Versão comprimida sobrescreve o original. Backup legível salvo como `<arquivo>.original.md`.
 
 ## Trigger
 
-`/caveman:compress <filepath>` or when user asks to compress a memory file.
+`/caveman:compress <caminho>` ou quando usuário pede pra comprimir um arquivo de memória.
 
-## Process
+## Processo
 
-1. This SKILL.md lives alongside `scripts/` in the same directory. Find that directory.
+1. Scripts de compressão vivem em `caveman-compress/scripts/` (ao lado deste SKILL.md). Se o caminho não estiver disponível, procurar `caveman-compress/scripts/__main__.py`.
 
-2. Run:
+2. Rodar:
 
-cd <directory_containing_this_SKILL.md> && python3 -m scripts <absolute_filepath>
+cd caveman-compress && python3 -m scripts <caminho_absoluto>
 
-3. The CLI will:
-- detect file type (no tokens)
-- call Claude to compress
-- validate output (no tokens)
-- if errors: cherry-pick fix with Claude (targeted fixes only, no recompression)
-- retry up to 2 times
-- if still failing after 2 retries: report error to user, leave original file untouched
+3. O CLI vai:
+- detectar tipo de arquivo (sem tokens)
+- chamar Claude pra comprimir
+- validar saída (sem tokens)
+- se erro: cherry-pick fix com Claude (correções alvo, sem recomprimir)
+- retry até 2 vezes
+- se falhar depois de 2 retries: reportar erro, deixar arquivo original intocado
 
-4. Return result to user
+4. Retornar resultado pro usuário
 
-## Compression Rules
+## Regras de Compressão
 
-### Remove
-- Articles: a, an, the
-- Filler: just, really, basically, actually, simply, essentially, generally
-- Pleasantries: "sure", "certainly", "of course", "happy to", "I'd recommend"
-- Hedging: "it might be worth", "you could consider", "it would be good to"
-- Redundant phrasing: "in order to" → "to", "make sure to" → "ensure", "the reason is because" → "because"
-- Connective fluff: "however", "furthermore", "additionally", "in addition"
+### Remover
 
-### Preserve EXACTLY (never modify)
-- Code blocks (fenced ``` and indented)
-- Inline code (`backtick content`)
-- URLs and links (full URLs, markdown links)
-- File paths (`/src/components/...`, `./config.yaml`)
-- Commands (`npm install`, `git commit`, `docker build`)
-- Technical terms (library names, API names, protocols, algorithms)
-- Proper nouns (project names, people, companies)
-- Dates, version numbers, numeric values
-- Environment variables (`$HOME`, `NODE_ENV`)
+- Artigos: o, a, os, as, um, uma, uns, umas
+- Filler: basicamente, simplesmente, na verdade, efetivamente, literalmente, realmente, praticamente, obviamente, claramente, meio que, tipo, então (filler), enfim
+- Cortesias: "com certeza", "claro", "sem dúvida", "fico feliz em", "recomendo que", "sugiro que"
+- Hedging: "talvez seja interessante", "vale a pena considerar", "seria bom", "pode ser que", "eu acho que"
+- Redundâncias: "de forma a" → "para", "no sentido de" → "para", "pelo fato de que" → "porque", "tendo em vista que" → "pois", "em virtude de" → "por"
+- Fluff conectivo: "além disso", "ademais", "entretanto", "todavia", "outrossim", "dessa forma", "sendo assim", "nesse sentido", "dito isso"
 
-### Preserve Structure
-- All markdown headings (keep exact heading text, compress body below)
-- Bullet point hierarchy (keep nesting level)
-- Numbered lists (keep numbering)
-- Tables (compress cell text, keep structure)
-- Frontmatter/YAML headers in markdown files
+### Preservar EXATO (nunca modificar)
 
-### Compress
-- Use short synonyms: "big" not "extensive", "fix" not "implement a solution for", "use" not "utilize"
-- Fragments OK: "Run tests before commit" not "You should always run tests before committing"
-- Drop "you should", "make sure to", "remember to" — just state the action
-- Merge redundant bullets that say the same thing differently
-- Keep one example where multiple examples show the same pattern
+- Blocos de código (``` cercados e indentados)
+- Código inline (`conteúdo em crase`)
+- URLs e links (URLs completas, links markdown)
+- Caminhos de arquivo (`/src/components/...`, `./config.yaml`)
+- Comandos (`npm install`, `git commit`, `docker build`)
+- Termos técnicos (nomes de libs, APIs, protocolos, algoritmos)
+- Nomes próprios (projetos, pessoas, empresas)
+- Datas, números de versão, valores numéricos
+- Variáveis de ambiente (`$HOME`, `NODE_ENV`)
+- **Termos técnicos em inglês estabelecidos:** push, pull, commit, merge, deploy, build, release, rollback, feature, branch, tag, issue, PR, runtime, stack, framework, endpoint, payload, request, response, bug, fix, hook, trigger, callback, pipeline
 
-CRITICAL RULE:
-Anything inside ``` ... ``` must be copied EXACTLY.
-Do not:
-- remove comments
-- remove spacing
-- reorder lines
-- shorten commands
-- simplify anything
+### Preservar estrutura
 
-Inline code (`...`) must be preserved EXACTLY.
-Do not modify anything inside backticks.
+- Todos cabeçalhos markdown (manter texto exato, comprimir corpo abaixo)
+- Hierarquia de bullets (manter nível de indentação)
+- Listas numeradas (manter numeração)
+- Tabelas (comprimir texto de célula, manter estrutura)
+- Frontmatter / cabeçalhos YAML em arquivos markdown
 
-If file contains code blocks:
-- Treat code blocks as read-only regions
-- Only compress text outside them
-- Do not merge sections around code
+### Comprimir
 
-## Pattern
+- Usar sinônimos curtos: "usar" não "utilizar", "ver" não "visualizar", "fazer" não "realizar", "achar" não "encontrar", "grande" não "extenso", "fix" não "implementar uma solução para"
+- Fragmentos OK: "Rodar testes antes do commit" não "Você deve sempre rodar os testes antes de fazer o commit"
+- Cortar "você deve", "certifique-se de", "lembre-se de" — só afirmar a ação
+- Fundir bullets redundantes que dizem a mesma coisa de formas diferentes
+- Manter um exemplo quando múltiplos mostram o mesmo padrão
+
+REGRA CRÍTICA:
+Qualquer coisa dentro de ``` ... ``` deve ser copiada EXATAMENTE.
+Não:
+- remover comentários
+- remover espaços
+- reordenar linhas
+- encurtar comandos
+- simplificar nada
+
+Código inline (`...`) deve ser preservado EXATO.
+Não modificar nada entre crases.
+
+Se o arquivo contém blocos de código:
+- Tratar blocos como regiões read-only
+- Comprimir só texto fora deles
+- Não fundir seções ao redor do código
+
+IDIOMA:
+Saída DEVE permanecer em português. Não traduzir para inglês.
+
+## Padrão
 
 Original:
-> You should always make sure to run the test suite before pushing any changes to the main branch. This is important because it helps catch bugs early and prevents broken builds from being deployed to production.
+> Você deve sempre se certificar de rodar a suíte de testes antes de fazer push de qualquer mudança para a branch main. Isso é importante porque ajuda a pegar bugs cedo e previne builds quebrados em produção.
 
-Compressed:
-> Run tests before push to main. Catch bugs early, prevent broken prod deploys.
+Comprimido:
+> Rodar testes antes de push para main. Pega bugs cedo, previne prod quebrada.
 
 Original:
-> The application uses a microservices architecture with the following components. The API gateway handles all incoming requests and routes them to the appropriate service. The authentication service is responsible for managing user sessions and JWT tokens.
+> A aplicação usa uma arquitetura de microsserviços com os seguintes componentes. O API gateway trata todas as requisições recebidas e as roteia para o serviço apropriado. O serviço de autenticação é responsável por gerenciar sessões de usuário e tokens JWT.
 
-Compressed:
-> Microservices architecture. API gateway route all requests to services. Auth service manage user sessions + JWT tokens.
+Comprimido:
+> Arquitetura microsserviços. API gateway roteia requisições para serviços. Auth service gerencia sessões de usuário + tokens JWT.
 
-## Boundaries
+Original:
+> É importante notar que o processo de deploy deve ser feito sempre após a validação completa dos testes de integração, pois caso contrário podemos ter problemas em produção.
 
-- ONLY compress natural language files (.md, .txt, extensionless)
-- NEVER modify: .py, .js, .ts, .json, .yaml, .yml, .toml, .env, .lock, .css, .html, .xml, .sql, .sh
-- If file has mixed content (prose + code), compress ONLY the prose sections
-- If unsure whether something is code or prose, leave it unchanged
-- Original file is backed up as FILE.original.md before overwriting
-- Never compress FILE.original.md (skip it)
+Comprimido:
+> Deploy só depois de testes de integração validados. Senão quebra prod.
+
+## Limites
+
+- SÓ comprimir arquivos em linguagem natural (.md, .txt, sem extensão)
+- NUNCA modificar: .py, .js, .ts, .json, .yaml, .yml, .toml, .env, .lock, .css, .html, .xml, .sql, .sh
+- Se arquivo tem conteúdo misto (prosa + código), comprimir SÓ a prosa
+- Se incerto se algo é código ou prosa, deixar intocado
+- Arquivo original salvo como FILE.original.md antes de sobrescrever
+- Nunca comprimir FILE.original.md (pular)

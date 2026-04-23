@@ -103,49 +103,79 @@ def call_claude(prompt: str) -> str:
 
 def build_compress_prompt(original: str) -> str:
     return f"""
-Compress this markdown into caveman format.
+Comprimir este markdown para o formato cavernoso em português brasileiro (pt-BR).
 
-STRICT RULES:
-- Do NOT modify anything inside ``` code blocks
-- Do NOT modify anything inside inline backticks
-- Preserve ALL URLs exactly
-- Preserve ALL headings exactly
-- Preserve file paths and commands
-- Return ONLY the compressed markdown body — do NOT wrap the entire output in a ```markdown fence or any other fence. Inner code blocks from the original stay as-is; do not add a new outer fence around the whole file.
+IDIOMA:
+- Saída DEVE permanecer em português. NÃO traduzir para inglês.
+- Manter termos técnicos em inglês quando forem jargão estabelecido: push, pull, commit, merge, deploy, build, release, rollback, branch, tag, issue, PR, runtime, stack, framework, endpoint, payload, request, response, bug, fix, hook, trigger, callback, pipeline.
 
-Only compress natural language.
+REGRAS ESTRITAS:
+- NÃO modificar nada dentro de blocos de código ```
+- NÃO modificar nada dentro de crases inline `...`
+- Preservar TODAS as URLs exatamente
+- Preservar TODOS os cabeçalhos exatamente
+- Preservar caminhos de arquivos e comandos
+- Retornar APENAS o corpo do markdown comprimido — NÃO envolver a saída em ```markdown ou outra cerca. Blocos de código internos ficam como estão; não adicionar nova cerca externa.
 
-TEXT:
+COMPRIMIR apenas linguagem natural. Remover:
+
+- Artigos definidos e indefinidos quando possível: "o", "a", "os", "as", "um", "uma", "uns", "umas"
+- Filler: "basicamente", "simplesmente", "na verdade", "efetivamente", "literalmente", "realmente", "praticamente", "obviamente", "claramente", "meio que", "tipo", "então" (quando filler), "enfim"
+- Cortesias: "com certeza", "claro", "sem dúvida", "fico feliz em", "recomendo que", "sugiro que"
+- Hedging: "talvez seja interessante", "vale a pena considerar", "seria bom", "pode ser que", "eu acho que"
+- Fluff conectivo: "além disso", "ademais", "entretanto", "todavia", "outrossim", "dessa forma", "sendo assim", "nesse sentido", "dito isso"
+- Redundâncias: "de forma a" → "para", "no sentido de" → "para", "pelo fato de que" → "porque", "tendo em vista que" → "pois", "em virtude de" → "por"
+- Expressões vazias: "é importante notar que", "vale a pena mencionar que", "cabe ressaltar que", "no momento atual", "considerando tudo"
+
+PREFERIR SINÔNIMOS CURTOS:
+- "usar" em vez de "utilizar"
+- "fazer" em vez de "realizar"
+- "ver" em vez de "visualizar"
+- "achar" em vez de "encontrar" (em contextos informais)
+- "criar" em vez de "desenvolver" quando possível
+- "grande" em vez de "extenso"
+
+FRAGMENTOS OK. Gramática completa não é obrigatória. Imperativo direto.
+Cortar "você deve", "certifique-se de", "lembre-se de" — só afirmar a ação.
+
+EXEMPLO:
+Original: "Você deve sempre se certificar de rodar os testes antes de fazer push para a branch main. Isso é importante porque ajuda a pegar bugs cedo."
+Comprimido: "Rodar testes antes de push para main. Pega bugs cedo."
+
+Lembrete: saída em português pt-BR.
+
+TEXTO:
 {original}
 """
 
 
 def build_fix_prompt(original: str, compressed: str, errors: List[str]) -> str:
     errors_str = "\n".join(f"- {e}" for e in errors)
-    return f"""You are fixing a caveman-compressed markdown file. Specific validation errors were found.
+    return f"""Você está corrigindo um arquivo markdown comprimido no formato cavernoso pt-BR. Erros específicos de validação foram encontrados.
 
-CRITICAL RULES:
-- DO NOT recompress or rephrase the file
-- ONLY fix the listed errors — leave everything else exactly as-is
-- The ORIGINAL is provided as reference only (to restore missing content)
-- Preserve caveman style in all untouched sections
+REGRAS CRÍTICAS:
+- NÃO recomprimir ou reformular o arquivo
+- APENAS corrigir os erros listados — deixar todo o resto exatamente como está
+- O ORIGINAL é fornecido só como referência (para restaurar conteúdo faltante)
+- Preservar o estilo cavernoso em todas as seções não tocadas
+- Saída em português pt-BR
 
-ERRORS TO FIX:
+ERROS A CORRIGIR:
 {errors_str}
 
-HOW TO FIX:
-- Missing URL: find it in ORIGINAL, restore it exactly where it belongs in COMPRESSED
-- Code block mismatch: find the exact code block in ORIGINAL, restore it in COMPRESSED
-- Heading mismatch: restore the exact heading text from ORIGINAL into COMPRESSED
-- Do not touch any section not mentioned in the errors
+COMO CORRIGIR:
+- URL faltante: achar no ORIGINAL, restaurar exato onde pertence no COMPRIMIDO
+- Bloco de código divergente: achar o bloco exato no ORIGINAL, restaurar no COMPRIMIDO
+- Cabeçalho divergente: restaurar texto exato do cabeçalho do ORIGINAL no COMPRIMIDO
+- Não mexer em nenhuma seção não mencionada nos erros
 
-ORIGINAL (reference only):
+ORIGINAL (só referência):
 {original}
 
-COMPRESSED (fix this):
+COMPRIMIDO (corrigir este):
 {compressed}
 
-Return ONLY the fixed compressed file. No explanation.
+Retornar APENAS o arquivo comprimido corrigido. Sem explicação.
 """
 
 
