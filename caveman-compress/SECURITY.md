@@ -1,31 +1,31 @@
-# Security
+# Segurança
 
-## Snyk High Risk Rating
+## Classificação Snyk High Risk
 
-`caveman-compress` receives a Snyk High Risk rating due to static analysis heuristics. This document explains what the skill does and does not do.
+`caveman-compress` recebe classificação Snyk High Risk devido a heurísticas de análise estática. Este documento explica o que a skill faz e o que não faz.
 
-### What triggers the rating
+### O que dispara a classificação
 
-1. **subprocess usage**: The skill calls the `claude` CLI via `subprocess.run()` as a fallback when `ANTHROPIC_API_KEY` is not set. The subprocess call uses a fixed argument list — no shell interpolation occurs. User file content is passed via stdin, not as a shell argument.
+1. **uso de subprocess**: A skill chama o CLI `claude` via `subprocess.run()` como fallback quando `ANTHROPIC_API_KEY` não está definida. A chamada de subprocess usa uma lista fixa de argumentos — nenhuma interpolação de shell acontece. Conteúdo do arquivo do usuário é passado via stdin, não como argumento de shell.
 
-2. **File read/write**: The skill reads the file the user explicitly points it at, compresses it, and writes the result back to the same path. A `.original.md` backup is saved alongside it. No files outside the user-specified path are read or written.
+2. **Leitura/escrita de arquivo**: A skill lê o arquivo que o usuário explicitamente aponta, comprime, e escreve o resultado de volta no mesmo caminho. Um backup `.original.md` é salvo ao lado. Nenhum arquivo fora do caminho especificado pelo usuário é lido ou escrito.
 
-### What the skill does NOT do
+### O que a skill NÃO faz
 
-- Does not execute user file content as code
-- Does not make network requests except to Anthropic's API (via SDK or CLI)
-- Does not access files outside the path the user provides
-- Does not use shell=True or string interpolation in subprocess calls
-- Does not collect or transmit any data beyond the file being compressed
+- Não executa conteúdo de arquivo do usuário como código
+- Não faz requisições de rede exceto para a API da Anthropic (via SDK ou CLI)
+- Não acessa arquivos fora do caminho fornecido pelo usuário
+- Não usa shell=True nem interpolação de string em chamadas de subprocess
+- Não coleta nem transmite dado algum além do arquivo sendo comprimido
 
-### Auth behavior
+### Comportamento de autenticação
 
-If `ANTHROPIC_API_KEY` is set, the skill uses the Anthropic Python SDK directly (no subprocess). If not set, it falls back to the `claude` CLI, which uses the user's existing Claude desktop authentication.
+Se `ANTHROPIC_API_KEY` estiver definida, a skill usa o SDK Python da Anthropic diretamente (sem subprocess). Se não, faz fallback para o CLI `claude`, que usa a autenticação existente do Claude desktop do usuário.
 
-### File size limit
+### Limite de tamanho de arquivo
 
-Files larger than 500KB are rejected before any API call is made.
+Arquivos maiores que 500KB são rejeitados antes de qualquer chamada à API.
 
-### Reporting a vulnerability
+### Reportando uma vulnerabilidade
 
-If you believe you've found a genuine security issue, please open a GitHub issue with the label `security`.
+Se acredita ter encontrado uma questão de segurança genuína, por favor abra uma issue no GitHub com a label `security`.

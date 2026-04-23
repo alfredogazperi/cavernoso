@@ -1,22 +1,22 @@
-# Contributing
+# Contribuindo
 
-Improvements to the SKILL.md prompt are welcome — open a PR with before/after examples showing the change.
+Melhorias ao prompt do SKILL.md são bem-vindas — abra um PR com exemplos antes/depois mostrando a mudança.
 
-## How
+## Como
 
-1. Fork repo
-2. Edit `skills/caveman/SKILL.md` — this is the only copy you need to touch
-3. Open PR with:
-   - **Before:** what caveman say now
-   - **After:** what caveman say with change
-   - One sentence why change better
+1. Fork do repo
+2. Edite `skills/caveman/SKILL.md` — esta é a única cópia que você precisa tocar
+3. Abra PR com:
+   - **Antes:** o que caveman fala agora
+   - **Depois:** o que caveman fala com a mudança
+   - Uma frase sobre por que a mudança é melhor
 
-> **Note:** `caveman/SKILL.md`, `plugins/caveman/skills/caveman/SKILL.md`, `.cursor/skills/caveman/SKILL.md`, and `caveman.skill` are auto-synced by CI after merge. Do not edit them directly.
-> 
-> **Note on compress skill:** If you are modifying the compress skill, edit `caveman-compress/SKILL.md` or `caveman-compress/scripts/`. CI will automatically sync these changes to `skills/compress/` and `plugins/caveman/skills/compress/`.
+> **Nota:** `caveman/SKILL.md`, `plugins/caveman/skills/caveman/SKILL.md`, `.cursor/skills/caveman/SKILL.md` e `caveman.skill` são auto-sincronizados por CI após merge. Não edite diretamente.
+>
+> **Nota sobre a skill compress:** Se está modificando a skill compress, edite `caveman-compress/SKILL.md` ou `caveman-compress/scripts/`. O CI vai sincronizar automaticamente essas mudanças para `skills/compress/` e `plugins/caveman/skills/compress/`.
 
-Small focused change > big rewrite. Caveman like simple.
+Mudança pequena e focada > reescrita grande. Caveman gosta simples.
 
-## Ideas
+## Ideias
 
-See [issues labeled `good first issue`](../../issues?q=label%3A%22good+first+issue%22) for starter tasks.
+Veja [issues com label `good first issue`](../../issues?q=label%3A%22good+first+issue%22) para tarefas iniciais.

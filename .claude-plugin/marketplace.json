@@ -1,15 +1,15 @@
 {
   "$schema": "https://anthropic.com/claude-code/marketplace.schema.json",
-  "name": "caveman",
-  "description": "Ultra-compressed communication mode for Claude Code. Cuts ~75% of tokens while keeping full technical accuracy.",
+  "name": "cavernoso",
+  "description": "Modo de comunicação ultracomprimido em pt-BR para Claude Code. Corta ~75% dos tokens mantendo precisão técnica total.",
   "owner": {
-    "name": "Julius Brussee",
-    "url": "https://github.com/JuliusBrussee"
+    "name": "Alfredo Gazperi",
+    "url": "https://github.com/alfredogazperi"
   },
   "plugins": [
     {
-      "name": "caveman",
-      "description": "Talk like caveman. Cut ~75% tokens. Keep all technical accuracy.",
+      "name": "cavernoso",
+      "description": "Falar como cavernoso em pt-BR. Cortar ~75% dos tokens. Manter precisão técnica.",
       "source": "./",
       "category": "productivity"
     }

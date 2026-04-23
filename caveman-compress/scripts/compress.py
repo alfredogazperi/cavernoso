@@ -12,6 +12,11 @@ import subprocess
 from pathlib import Path
 from typing import List
 
+try:
+    from .preprocess import preprocess as pt_preprocess
+except ImportError:  # quando rodado como script direto
+    from preprocess import preprocess as pt_preprocess  # type: ignore
+
 OUTER_FENCE_REGEX = re.compile(
     r"\A\s*(`{3,}|~{3,})[^\n]*\n(.*)\n\1\s*\Z", re.DOTALL
 )
@@ -219,9 +224,16 @@ def compress_file(filepath: Path) -> bool:
         print("Aborting to prevent data loss. Please remove or rename the backup file if you want to proceed.")
         return False
 
-    # Step 1: Compress
-    print("Compressing with Claude...")
-    compressed = call_claude(build_compress_prompt(original_text))
+    # Step 1a: Deterministic pt-BR preprocess (removes fixed redundancies,
+    # pleonasms, empty phrases, and isolated filler before LLM call).
+    preprocessed_text = pt_preprocess(original_text)
+    if preprocessed_text != original_text:
+        pre_saved = len(original_text) - len(preprocessed_text)
+        print(f"Pré-processamento pt-BR removeu {pre_saved} chars antes do LLM.")
+
+    # Step 1b: Compress via Claude
+    print("Comprimindo com Claude...")
+    compressed = call_claude(build_compress_prompt(preprocessed_text))
 
     # Save original as backup, write compressed to original path
     backup_path.write_text(original_text)

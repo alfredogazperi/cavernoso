@@ -1,76 +1,76 @@
 # CLAUDE.md — caveman
 
-## README is a product artifact
+## README é artefato de produto
 
-README = product front door. Non-technical people read it to decide if caveman worth install. Treat like UI copy.
+README = porta de entrada do produto. Pessoas não-técnicas leem pra decidir se caveman vale o install. Trate como copy de UI.
 
-**Rules for any README change:**
+**Regras para qualquer mudança de README:**
 
-- Readable by non-AI-agent users. If you write "SessionStart hook injects system context," invisible to most — translate it.
-- Keep Before/After examples first. That the pitch.
-- Install table always complete + accurate. One broken install command costs real user.
-- What You Get table must sync with actual code. Feature ships or removed → update table.
-- Preserve voice. Caveman speak in README on purpose. "Brain still big." "Cost go down forever." "One rock. That it." — intentional brand. Don't normalize.
-- Benchmark numbers from real runs in `benchmarks/` and `evals/`. Never invent or round. Re-run if doubt.
-- Adding new agent to install table → add detail block in `<details>` section below.
-- Readability check before any README commit: would non-programmer understand + install within 60 seconds?
-
----
-
-## Project overview
-
-Caveman makes AI coding agents respond in compressed caveman-style prose — cuts ~65-75% output tokens, full technical accuracy. Ships as Claude Code plugin, Codex plugin, Gemini CLI extension, agent rule files for Cursor, Windsurf, Cline, Copilot, 40+ others via `npx skills`.
+- Legível por usuários não-agentes-de-IA. Se você escrever "hook SessionStart injeta contexto de sistema", invisível pra maioria — traduza.
+- Mantenha exemplos Antes/Depois primeiro. Isso é o pitch.
+- Tabela de instalação sempre completa + acurada. Um comando de install quebrado custa usuário real.
+- Tabela "What You Get" precisa sincronizar com o código real. Feature entra ou sai → atualize a tabela.
+- Preserve a voz. Caveman fala no README de propósito. "Brain still big." "Cost go down forever." "One rock. That it." — brand intencional. Não normalize.
+- Números de benchmark vêm de rodadas reais em `benchmarks/` e `evals/`. Nunca invente nem arredonde. Rode de novo se tiver dúvida.
+- Adicionando agente novo à tabela de install → adicione bloco de detalhes na seção `<details>` abaixo.
+- Checagem de legibilidade antes de qualquer commit de README: um não-programador entenderia + instalaria em 60 segundos?
 
 ---
 
-## File structure and what owns what
+## Visão geral do projeto
 
-### Single source of truth files — edit only these
+Caveman faz agentes de IA de código responderem em prosa estilo caveman comprimida — corta ~65-75% dos tokens de saída, precisão técnica completa. Distribuído como plugin do Claude Code, plugin do Codex, extensão do Gemini CLI, arquivos de rule de agente para Cursor, Windsurf, Cline, Copilot, 40+ outros via `npx skills`.
 
-| File | What it controls |
+---
+
+## Estrutura de arquivos e quem é dono do quê
+
+### Arquivos fonte única da verdade — edite só estes
+
+| Arquivo | O que controla |
 |------|-----------------|
-| `skills/caveman/SKILL.md` | Caveman behavior: intensity levels, rules, wenyan mode, auto-clarity, persistence. Only file to edit for behavior changes. |
-| `rules/caveman-activate.md` | Always-on auto-activation rule body. CI injects into Cursor, Windsurf, Cline, Copilot rule files. Edit here, not agent-specific copies. |
-| `skills/caveman-commit/SKILL.md` | Caveman commit message behavior. Fully independent skill. |
-| `skills/caveman-review/SKILL.md` | Caveman code review behavior. Fully independent skill. |
-| `skills/caveman-help/SKILL.md` | Quick-reference card. One-shot display, not a persistent mode. |
-| `caveman-compress/SKILL.md` | Compress sub-skill behavior. |
+| `skills/caveman/SKILL.md` | Comportamento do caveman: níveis de intensidade, regras, modo wenyan, auto-clareza, persistência. Único arquivo a editar para mudanças de comportamento. |
+| `rules/caveman-activate.md` | Corpo da regra de auto-ativação always-on. CI injeta nos arquivos de rule de Cursor, Windsurf, Cline, Copilot. Edite aqui, não nas cópias específicas por agente. |
+| `skills/caveman-commit/SKILL.md` | Comportamento de mensagem de commit do caveman. Skill totalmente independente. |
+| `skills/caveman-review/SKILL.md` | Comportamento de code review do caveman. Skill totalmente independente. |
+| `skills/caveman-help/SKILL.md` | Cartão de referência rápida. Display one-shot, não um modo persistente. |
+| `caveman-compress/SKILL.md` | Comportamento da sub-skill compress. |
 
-### Auto-generated / auto-synced — do not edit directly
+### Auto-gerado / auto-sincronizado — não edite diretamente
 
-Overwritten by CI on push to main when sources change. Edits here lost.
+Sobrescritos pelo CI no push para main quando as fontes mudam. Edições aqui são perdidas.
 
-| File | Synced from |
+| Arquivo | Sincronizado de |
 |------|-------------|
 | `caveman/SKILL.md` | `skills/caveman/SKILL.md` |
 | `plugins/caveman/skills/caveman/SKILL.md` | `skills/caveman/SKILL.md` |
 | `.cursor/skills/caveman/SKILL.md` | `skills/caveman/SKILL.md` |
 | `.windsurf/skills/caveman/SKILL.md` | `skills/caveman/SKILL.md` |
-| `caveman.skill` | ZIP of `skills/caveman/` directory |
+| `caveman.skill` | ZIP do diretório `skills/caveman/` |
 | `.clinerules/caveman.md` | `rules/caveman-activate.md` |
 | `.github/copilot-instructions.md` | `rules/caveman-activate.md` |
-| `.cursor/rules/caveman.mdc` | `rules/caveman-activate.md` + Cursor frontmatter |
-| `.windsurf/rules/caveman.md` | `rules/caveman-activate.md` + Windsurf frontmatter |
+| `.cursor/rules/caveman.mdc` | `rules/caveman-activate.md` + frontmatter do Cursor |
+| `.windsurf/rules/caveman.md` | `rules/caveman-activate.md` + frontmatter do Windsurf |
 
 ---
 
-## CI sync workflow
+## Workflow de sync do CI
 
-`.github/workflows/sync-skill.yml` triggers on main push when `skills/caveman/SKILL.md` or `rules/caveman-activate.md` changes.
+`.github/workflows/sync-skill.yml` dispara no push para main quando `skills/caveman/SKILL.md` ou `rules/caveman-activate.md` muda.
 
-What it does:
-1. Copies `skills/caveman/SKILL.md` to all agent-specific SKILL.md locations
-2. Rebuilds `caveman.skill` as a ZIP of `skills/caveman/`
-3. Rebuilds all agent rule files from `rules/caveman-activate.md`, prepending agent-specific frontmatter (Cursor needs `alwaysApply: true`, Windsurf needs `trigger: always_on`)
-4. Commits and pushes with `[skip ci]` to avoid loops
+O que faz:
+1. Copia `skills/caveman/SKILL.md` para todos os locais de SKILL.md específicos por agente
+2. Reconstrói `caveman.skill` como ZIP de `skills/caveman/`
+3. Reconstrói todos os arquivos de rule de agente a partir de `rules/caveman-activate.md`, prependendo frontmatter específico por agente (Cursor precisa de `alwaysApply: true`, Windsurf precisa de `trigger: always_on`)
+4. Faz commit e push com `[skip ci]` para evitar loops
 
-CI bot commits as `github-actions[bot]`. After PR merge, wait for workflow before declaring release complete.
+Bot do CI commita como `github-actions[bot]`. Após merge do PR, espere o workflow antes de declarar release completa.
 
 ---
 
-## Hook system (Claude Code)
+## Sistema de hooks (Claude Code)
 
-Three hooks in `hooks/` plus a `caveman-config.js` shared module and a `package.json` CommonJS marker. Communicate via flag file at `$CLAUDE_CONFIG_DIR/.caveman-active` (falls back to `~/.claude/.caveman-active`).
+Três hooks em `hooks/` mais um módulo compartilhado `caveman-config.js` e um marker `package.json` CommonJS. Comunicam via arquivo de flag em `$CLAUDE_CONFIG_DIR/.caveman-active` (cai para `~/.claude/.caveman-active`).
 
 ```
 SessionStart hook ──writes "full"──▶ $CLAUDE_CONFIG_DIR/.caveman-active ◀──writes mode── UserPromptSubmit hook
@@ -81,135 +81,135 @@ SessionStart hook ──writes "full"──▶ $CLAUDE_CONFIG_DIR/.caveman-activ
                                             [CAVEMAN] / [CAVEMAN:ULTRA] / ...
 ```
 
-`hooks/package.json` pins the directory to `{"type": "commonjs"}` so the `.js` hooks resolve as CJS even when an ancestor `package.json` (e.g. `~/.claude/package.json` from another plugin) declares `"type": "module"`. Without this, `require()` blows up with `ReferenceError: require is not defined in ES module scope`.
+`hooks/package.json` fixa o diretório em `{"type": "commonjs"}` para que os hooks `.js` resolvam como CJS mesmo quando um `package.json` ancestral (ex.: `~/.claude/package.json` de outro plugin) declara `"type": "module"`. Sem isso, `require()` explode com `ReferenceError: require is not defined in ES module scope`.
 
-All hooks honor `CLAUDE_CONFIG_DIR` for non-default Claude Code config locations.
+Todos os hooks honram `CLAUDE_CONFIG_DIR` para locais de config do Claude Code não-padrão.
 
-### `hooks/caveman-config.js` — shared module
+### `hooks/caveman-config.js` — módulo compartilhado
 
-Exports:
-- `getDefaultMode()` — resolves default mode from `CAVEMAN_DEFAULT_MODE` env var, then `$XDG_CONFIG_HOME/caveman/config.json` / `~/.config/caveman/config.json` / `%APPDATA%\caveman\config.json`, then `'full'`
-- `safeWriteFlag(flagPath, content)` — symlink-safe flag write. Refuses if flag target or its immediate parent is a symlink. Opens with `O_NOFOLLOW` where supported. Atomic temp + rename. Creates with `0600`. Protects against local attackers replacing the predictable flag path with a symlink to clobber files writable by the user. Used by both write hooks. Silent-fails on all filesystem errors.
+Exporta:
+- `getDefaultMode()` — resolve modo padrão a partir da env var `CAVEMAN_DEFAULT_MODE`, depois `$XDG_CONFIG_HOME/caveman/config.json` / `~/.config/caveman/config.json` / `%APPDATA%\caveman\config.json`, depois `'full'`
+- `safeWriteFlag(flagPath, content)` — escrita de flag segura contra symlink. Recusa se o alvo da flag ou seu pai imediato for symlink. Abre com `O_NOFOLLOW` onde suportado. Temp atômico + rename. Cria com `0600`. Protege contra atacantes locais substituindo o caminho de flag previsível por um symlink pra sobrescrever arquivos graváveis pelo usuário. Usado pelos dois hooks de escrita. Falha silenciosa em todos erros de filesystem.
 
-### `hooks/caveman-activate.js` — SessionStart hook
+### `hooks/caveman-activate.js` — hook SessionStart
 
-Runs once per Claude Code session start. Three things:
-1. Writes the active mode to `$CLAUDE_CONFIG_DIR/.caveman-active` via `safeWriteFlag` (creates if missing)
-2. Emits caveman ruleset as hidden stdout — Claude Code injects SessionStart hook stdout as system context, invisible to user
-3. Checks `settings.json` for statusline config; if missing, appends nudge to offer setup on first interaction
+Roda uma vez por início de sessão do Claude Code. Três coisas:
+1. Escreve o modo ativo em `$CLAUDE_CONFIG_DIR/.caveman-active` via `safeWriteFlag` (cria se ausente)
+2. Emite o ruleset do caveman como stdout oculto — Claude Code injeta stdout do hook SessionStart como contexto de sistema, invisível ao usuário
+3. Checa `settings.json` para config de statusline; se ausente, anexa cutucada pra oferecer setup na primeira interação
 
-Silent-fails on all filesystem errors — never blocks session start.
+Falha silenciosa em todos erros de filesystem — nunca bloqueia o início da sessão.
 
-### `hooks/caveman-mode-tracker.js` — UserPromptSubmit hook
+### `hooks/caveman-mode-tracker.js` — hook UserPromptSubmit
 
-Reads JSON from stdin. Three responsibilities:
+Lê JSON do stdin. Três responsabilidades:
 
-**1. Slash-command activation.** If prompt starts with `/caveman`, writes mode to flag file via `safeWriteFlag`:
-- `/caveman` → configured default (see `caveman-config.js`, defaults to `full`)
+**1. Ativação por slash-command.** Se o prompt começa com `/caveman`, escreve modo no arquivo de flag via `safeWriteFlag`:
+- `/caveman` → padrão configurado (veja `caveman-config.js`, default `full`)
 - `/caveman lite` → `lite`
 - `/caveman ultra` → `ultra`
-- `/caveman wenyan` or `/caveman wenyan-full` → `wenyan`
+- `/caveman wenyan` ou `/caveman wenyan-full` → `wenyan`
 - `/caveman wenyan-lite` → `wenyan-lite`
 - `/caveman wenyan-ultra` → `wenyan-ultra`
 - `/caveman-commit` → `commit`
 - `/caveman-review` → `review`
 - `/caveman-compress` → `compress`
 
-**2. Natural-language activation/deactivation.** Matches phrases like "activate caveman", "turn on caveman mode", "talk like caveman" and writes the configured default mode. Matches "stop caveman", "disable caveman", "normal mode", "deactivate caveman" etc. and deletes the flag file. README promises these triggers, the hook enforces them.
+**2. Ativação/desativação por linguagem natural.** Casa frases como "activate caveman", "turn on caveman mode", "talk like caveman" e escreve o modo padrão configurado. Casa "stop caveman", "disable caveman", "normal mode", "deactivate caveman" etc. e deleta o arquivo de flag. README promete esses triggers, o hook executa.
 
-**3. Per-turn reinforcement.** When flag is set to a non-independent mode (i.e. not `commit`/`review`/`compress`), emits a small `hookSpecificOutput` JSON reminder so the model keeps caveman style after other plugins inject competing instructions mid-conversation. The full ruleset still comes from SessionStart — this is just an attention anchor.
+**3. Reforço por turno.** Quando a flag está setada para um modo não-independente (ou seja, não `commit`/`review`/`compress`), emite um pequeno reminder JSON `hookSpecificOutput` pro modelo manter o estilo caveman depois que outros plugins injetam instruções competindo no meio da conversa. O ruleset completo ainda vem do SessionStart — isto é só uma âncora de atenção.
 
-### `hooks/caveman-statusline.sh` — Statusline badge
+### `hooks/caveman-statusline.sh` — Badge de statusline
 
-Reads flag file at `$CLAUDE_CONFIG_DIR/.caveman-active`. Outputs colored badge string for Claude Code statusline:
-- `full` or empty → `[CAVEMAN]` (orange)
-- anything else → `[CAVEMAN:<MODE_UPPERCASED>]` (orange)
+Lê arquivo de flag em `$CLAUDE_CONFIG_DIR/.caveman-active`. Imprime string de badge colorida pra statusline do Claude Code:
+- `full` ou vazio → `[CAVEMAN]` (laranja)
+- qualquer outra coisa → `[CAVEMAN:<MODE_UPPERCASED>]` (laranja)
 
-Configured in `settings.json` under `statusLine.command`. PowerShell counterpart at `hooks/caveman-statusline.ps1` for Windows.
+Configurado em `settings.json` sob `statusLine.command`. Contraparte PowerShell em `hooks/caveman-statusline.ps1` para Windows.
 
-### Hook installation
+### Instalação de hooks
 
-**Plugin install** — hooks wired automatically by plugin system.
+**Install via plugin** — hooks conectados automaticamente pelo sistema de plugin.
 
-**Standalone install** — `hooks/install.sh` (macOS/Linux) or `hooks/install.ps1` (Windows) copies hook files into `~/.claude/hooks/` and patches `~/.claude/settings.json` to register SessionStart and UserPromptSubmit hooks plus statusline.
+**Install standalone** — `hooks/install.sh` (macOS/Linux) ou `hooks/install.ps1` (Windows) copia arquivos de hook pra `~/.claude/hooks/` e dá patch em `~/.claude/settings.json` pra registrar hooks SessionStart e UserPromptSubmit mais statusline.
 
-**Uninstall** — `hooks/uninstall.sh` / `hooks/uninstall.ps1` removes hook files and patches settings.json.
+**Desinstalar** — `hooks/uninstall.sh` / `hooks/uninstall.ps1` remove arquivos de hook e dá patch no settings.json.
 
 ---
 
-## Skill system
+## Sistema de skills
 
-Skills = Markdown files with YAML frontmatter consumed by Claude Code's skill/plugin system and by `npx skills` for other agents.
+Skills = arquivos Markdown com frontmatter YAML consumidos pelo sistema de skill/plugin do Claude Code e por `npx skills` para outros agentes.
 
-### Intensity levels
+### Níveis de intensidade
 
-Defined in `skills/caveman/SKILL.md`. Six levels: `lite`, `full` (default), `ultra`, `wenyan-lite`, `wenyan-full`, `wenyan-ultra`. Persists until changed or session ends.
+Definidos em `skills/caveman/SKILL.md`. Seis níveis: `lite`, `full` (padrão), `ultra`, `wenyan-lite`, `wenyan-full`, `wenyan-ultra`. Persiste até mudar ou sessão acabar.
 
-### Auto-clarity rule
+### Regra de auto-clareza
 
-Caveman drops to normal prose for: security warnings, irreversible action confirmations, multi-step sequences where fragment ambiguity risks misread, user confused or repeating question. Resumes after. Defined in skill — preserve in any SKILL.md edit.
+Caveman cai pra prosa normal em: avisos de segurança, confirmações de ação irreversível, sequências multi-passo onde ambiguidade de fragmento arrisca má leitura, usuário confuso ou repetindo pergunta. Retoma depois. Definido na skill — preserve em qualquer edição de SKILL.md.
 
 ### caveman-compress
 
-Sub-skill in `caveman-compress/SKILL.md`. Takes file path, compresses prose to caveman style, writes to original path, saves backup at `<filename>.original.md`. Validates headings, code blocks, URLs, file paths, commands preserved. Retries up to 2 times on failure with targeted patches only. Requires Python 3.10+.
+Sub-skill em `caveman-compress/SKILL.md`. Recebe caminho de arquivo, comprime prosa para estilo caveman, escreve no caminho original, salva backup em `<filename>.original.md`. Valida headings, blocos de código, URLs, caminhos de arquivo, comandos preservados. Retry até 2 vezes em falha com patches pontuais apenas. Requer Python 3.10+.
 
 ### caveman-commit / caveman-review
 
-Independent skills in `skills/caveman-commit/SKILL.md` and `skills/caveman-review/SKILL.md`. Both have own `description` and `name` frontmatter so they load independently. caveman-commit: Conventional Commits, ≤50 char subject. caveman-review: one-line comments in `L<line>: <severity> <problem>. <fix>.` format.
+Skills independentes em `skills/caveman-commit/SKILL.md` e `skills/caveman-review/SKILL.md`. Ambas têm frontmatter próprio de `description` e `name` pra carregarem independentemente. caveman-commit: Conventional Commits, assunto ≤50 chars. caveman-review: comentários em uma linha no formato `L<linha>: <severidade> <problema>. <correção>.`.
 
 ---
 
-## Agent distribution
+## Distribuição por agente
 
-How caveman reaches each agent type:
+Como caveman chega em cada tipo de agente:
 
-| Agent | Mechanism | Auto-activates? |
+| Agente | Mecanismo | Auto-ativa? |
 |-------|-----------|----------------|
-| Claude Code | Plugin (hooks + skills) or standalone hooks | Yes — SessionStart hook injects rules |
-| Codex | Plugin in `plugins/caveman/` plus repo `.codex/hooks.json` and `.codex/config.toml` | Yes on macOS/Linux — SessionStart hook |
-| Gemini CLI | Extension with `GEMINI.md` context file | Yes — context file loads every session |
-| Cursor | `.cursor/rules/caveman.mdc` with `alwaysApply: true` | Yes — always-on rule |
-| Windsurf | `.windsurf/rules/caveman.md` with `trigger: always_on` | Yes — always-on rule |
-| Cline | `.clinerules/caveman.md` (auto-discovered) | Yes — Cline injects all .clinerules files |
-| Copilot | `.github/copilot-instructions.md` + `AGENTS.md` | Yes — repo-wide instructions |
-| Others | `npx skills add JuliusBrussee/caveman` | No — user must say `/caveman` each session |
+| Claude Code | Plugin (hooks + skills) ou hooks standalone | Sim — hook SessionStart injeta regras |
+| Codex | Plugin em `plugins/caveman/` mais `.codex/hooks.json` e `.codex/config.toml` do repo | Sim no macOS/Linux — hook SessionStart |
+| Gemini CLI | Extensão com arquivo de contexto `GEMINI.md` | Sim — arquivo de contexto carrega toda sessão |
+| Cursor | `.cursor/rules/caveman.mdc` com `alwaysApply: true` | Sim — rule always-on |
+| Windsurf | `.windsurf/rules/caveman.md` com `trigger: always_on` | Sim — rule always-on |
+| Cline | `.clinerules/caveman.md` (auto-descoberto) | Sim — Cline injeta todos arquivos .clinerules |
+| Copilot | `.github/copilot-instructions.md` + `AGENTS.md` | Sim — instruções de repo inteiro |
+| Outros | `npx skills add JuliusBrussee/caveman` | Não — usuário precisa falar `/caveman` cada sessão |
 
-For agents without hook systems, minimal always-on snippet lives in README under "Want it always on?" — keep current with `rules/caveman-activate.md`.
+Para agentes sem sistema de hook, snippet mínimo always-on vive no README sob "Want it always on?" — mantenha atualizado com `rules/caveman-activate.md`.
 
 ---
 
 ## Evals
 
-`evals/` has three-arm harness:
-- `__baseline__` — no system prompt
+`evals/` tem harness de três braços:
+- `__baseline__` — sem system prompt
 - `__terse__` — `Answer concisely.`
 - `<skill>` — `Answer concisely.\n\n{SKILL.md}`
 
-Honest delta = **skill vs terse**, not skill vs baseline. Baseline comparison conflates skill with generic terseness — that cheating. Harness designed to prevent this.
+Delta honesto = **skill vs terse**, não skill vs baseline. Comparação com baseline confunde skill com concisão genérica — isso é trapaça. Harness projetada pra prevenir isso.
 
-`llm_run.py` calls `claude -p --system-prompt ...` per (prompt, arm), saves to `evals/snapshots/results.json`. `measure.py` reads snapshot offline with tiktoken (OpenAI BPE — approximates Claude tokenizer, ratios meaningful, absolute numbers approximate).
+`llm_run.py` chama `claude -p --system-prompt ...` por (prompt, braço), salva em `evals/snapshots/results.json`. `measure.py` lê snapshot offline com tiktoken (BPE da OpenAI — aproxima tokenizer do Claude, razões significativas, números absolutos aproximados).
 
-Add skill: drop `skills/<name>/SKILL.md`. Harness auto-discovers. Add prompt: append line to `evals/prompts/en.txt`.
+Adicionar skill: coloque `skills/<nome>/SKILL.md`. Harness auto-descobre. Adicionar prompt: anexe linha a `evals/prompts/en.txt`.
 
-Snapshots committed to git. CI reads without API calls. Only regenerate when SKILL.md or prompts change.
+Snapshots comitados no git. CI lê sem chamadas de API. Só regenere quando SKILL.md ou prompts mudam.
 
 ---
 
 ## Benchmarks
 
-`benchmarks/` runs real prompts through Claude API (not Claude Code CLI), records raw token counts. Results committed as JSON in `benchmarks/results/`. Benchmark table in README generated from results — update when regenerating.
+`benchmarks/` roda prompts reais pela API Claude (não Claude Code CLI), registra contagens brutas de tokens. Resultados comitados como JSON em `benchmarks/results/`. Tabela de benchmark no README gerada a partir dos resultados — atualize ao regenerar.
 
-To reproduce: `uv run python benchmarks/run.py` (needs `ANTHROPIC_API_KEY` in `.env.local`).
+Para reproduzir: `uv run python benchmarks/run.py` (precisa de `ANTHROPIC_API_KEY` em `.env.local`).
 
 ---
 
-## Key rules for agents working here
+## Regras-chave para agentes trabalhando aqui
 
-- Edit `skills/caveman/SKILL.md` for behavior changes. Never edit synced copies.
-- Edit `rules/caveman-activate.md` for auto-activation rule changes. Never edit agent-specific rule copies.
-- README most important file for user-facing impact. Optimize for non-technical readers. Preserve caveman voice.
-- Benchmark and eval numbers must be real. Never fabricate or estimate.
-- CI workflow commits back to main after merge. Account for when checking branch state.
-- Hook files must silent-fail on all filesystem errors. Never let hook crash block session start.
-- Any new flag file write must go through `safeWriteFlag()` in `caveman-config.js`. Direct `fs.writeFileSync` on predictable user-owned paths reopens the symlink-clobber attack surface.
-- Hooks must respect `CLAUDE_CONFIG_DIR` env var, not hardcode `~/.claude`. Same for `install.sh` / `install.ps1` / statusline scripts.
+- Edite `skills/caveman/SKILL.md` para mudanças de comportamento. Nunca edite cópias sincronizadas.
+- Edite `rules/caveman-activate.md` para mudanças de regra de auto-ativação. Nunca edite cópias de rule específicas por agente.
+- README é o arquivo mais importante para impacto voltado ao usuário. Otimize para leitores não-técnicos. Preserve a voz caveman.
+- Números de benchmark e eval precisam ser reais. Nunca fabrique nem estime.
+- Workflow de CI commita de volta na main após merge. Considere isso ao checar estado da branch.
+- Arquivos de hook precisam falhar silencioso em todos erros de filesystem. Nunca deixe crash de hook bloquear início de sessão.
+- Qualquer escrita nova de arquivo de flag precisa passar por `safeWriteFlag()` em `caveman-config.js`. `fs.writeFileSync` direto em caminhos previsíveis de propriedade do usuário reabre a superfície de ataque de clobber por symlink.
+- Hooks precisam respeitar env var `CLAUDE_CONFIG_DIR`, não hardcodar `~/.claude`. Mesmo para `install.sh` / `install.ps1` / scripts de statusline.

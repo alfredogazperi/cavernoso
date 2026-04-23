@@ -2,80 +2,82 @@
   <img src="https://em-content.zobj.net/source/apple/391/rock_1faa8.png" width="120" />
 </p>
 
-<h1 align="center">caveman</h1>
+<h1 align="center">cavernoso</h1>
 
 <p align="center">
-  <strong>why use many token when few do trick</strong>
+  <strong>fork pt-BR de caveman — por que usar muito token se pouco resolve</strong>
+</p>
+
+> **Nota:** Este é um fork em português brasileiro de [caveman](https://github.com/JuliusBrussee/caveman) (upstream por Julius Brussee). Toda a documentação, skills, hooks e commands foram traduzidos para pt-BR, preservando o comportamento original. Para a versão em inglês, veja o [repositório upstream](https://github.com/JuliusBrussee/caveman).
+
+<p align="center">
+  <a href="https://github.com/alfredogazperi/cavernoso/stargazers"><img src="https://img.shields.io/github/stars/alfredogazperi/cavernoso?style=flat&color=yellow" alt="Stars"></a>
+  <a href="https://github.com/alfredogazperi/cavernoso/commits/pt-br"><img src="https://img.shields.io/github/last-commit/alfredogazperi/cavernoso?style=flat" alt="Last Commit"></a>
+  <a href="LICENSE"><img src="https://img.shields.io/github/license/alfredogazperi/cavernoso?style=flat" alt="License"></a>
 </p>
 
 <p align="center">
-  <a href="https://github.com/JuliusBrussee/caveman/stargazers"><img src="https://img.shields.io/github/stars/JuliusBrussee/caveman?style=flat&color=yellow" alt="Stars"></a>
-  <a href="https://github.com/JuliusBrussee/caveman/commits/main"><img src="https://img.shields.io/github/last-commit/JuliusBrussee/caveman?style=flat" alt="Last Commit"></a>
-  <a href="LICENSE"><img src="https://img.shields.io/github/license/JuliusBrussee/caveman?style=flat" alt="License"></a>
-</p>
-
-<p align="center">
-  <a href="#before--after">Before/After</a> •
-  <a href="#install">Install</a> •
-  <a href="#intensity-levels">Levels</a> •
-  <a href="#caveman-skills">Skills</a> •
+  <a href="#antes--depois">Antes/Depois</a> •
+  <a href="#instalação">Instalação</a> •
+  <a href="#níveis-de-intensidade">Níveis</a> •
+  <a href="#skills-do-caveman">Skills</a> •
   <a href="#benchmarks">Benchmarks</a> •
   <a href="#evals">Evals</a>
 </p>
 
 <p align="center">
-  <strong>🪨 Caveman Ecosystem</strong> &nbsp;·&nbsp;
-  <strong>caveman</strong> <em>talk less</em> <sub>(you are here)</sub> &nbsp;·&nbsp;
-  <a href="https://github.com/JuliusBrussee/cavemem">cavemem</a> <em>remember more</em> &nbsp;·&nbsp;
-  <a href="https://github.com/JuliusBrussee/cavekit">cavekit</a> <em>build better</em>
+  <strong>🪨 Ecossistema Caveman</strong> &nbsp;·&nbsp;
+  <strong>caveman</strong> <em>falar menos</em> <sub>(você está aqui)</sub> &nbsp;·&nbsp;
+  <a href="https://github.com/JuliusBrussee/cavemem">cavemem</a> <em>lembrar mais</em> &nbsp;·&nbsp;
+  <a href="https://github.com/JuliusBrussee/cavekit">cavekit</a> <em>construir melhor</em>
 </p>
 
 ---
 
-A [Claude Code](https://docs.anthropic.com/en/docs/claude-code) skill/plugin and Codex plugin that makes agent talk like caveman — cutting **~75% of output tokens** while keeping full technical accuracy. Now with [文言文 mode](#文言文-wenyan-mode), [terse commits](#caveman-commit), [one-line code reviews](#caveman-review), and a [compression tool](#caveman-compress) that cuts **~46% of input tokens** every session.
+Uma skill/plugin do [Claude Code](https://docs.anthropic.com/en/docs/claude-code) e plugin do Codex que faz o agente falar como caveman — cortando **~75% dos tokens de saída** mantendo precisão técnica completa. Agora com [modo 文言文](#modo-文言文-wenyan), [commits terse](#caveman-commit), [code reviews em uma linha](#caveman-review) e uma [ferramenta de compressão](#caveman-compress) que corta **~46% dos tokens de entrada** toda sessão.
 
-Based on the viral observation that caveman-speak dramatically reduces LLM token usage without losing technical substance. So we made it a one-line install.
+Baseado na observação viral de que falar como caveman reduz drasticamente o uso de tokens pelo LLM sem perder substância técnica. Então transformamos isso em um install de uma linha.
 
-## Before / After
+## Antes / Depois
 
 <table>
 <tr>
 <td width="50%">
 
-### 🗣️ Normal Claude (69 tokens)
+### 🗣️ Claude Normal (69 tokens)
 
-> "The reason your React component is re-rendering is likely because you're creating a new object reference on each render cycle. When you pass an inline object as a prop, React's shallow comparison sees it as a different object every time, which triggers a re-render. I'd recommend using useMemo to memoize the object."
+> "A razão pela qual seu componente React está re-renderizando é provavelmente porque você está criando uma nova referência de objeto em cada ciclo de render. Quando você passa um objeto inline como prop, a comparação rasa do React vê como objeto diferente toda vez, o que dispara um re-render. Eu recomendaria usar useMemo para memoizar o objeto."
 
 </td>
 <td width="50%">
 
-### 🪨 Caveman Claude (19 tokens)
+### 🪨 Claude Caveman (19 tokens)
 
-> "New object ref each render. Inline object prop = new ref = re-render. Wrap in `useMemo`."
+> "Ref nova de objeto cada render. Prop objeto inline = ref nova = re-render. Envolve em `useMemo`."
 
 </td>
 </tr>
 <tr>
 <td>
 
-### 🗣️ Normal Claude
+### 🗣️ Claude Normal
 
-> "Sure! I'd be happy to help you with that. The issue you're experiencing is most likely caused by your authentication middleware not properly validating the token expiry. Let me take a look and suggest a fix."
+> "Claro! Ficarei feliz em te ajudar. O problema que você está enfrentando provavelmente é causado pelo seu middleware de autenticação não validando corretamente a expiração do token. Deixa eu dar uma olhada e sugerir uma correção."
 
 </td>
 <td>
 
-### 🪨 Caveman Claude
+### 🪨 Claude Caveman
 
-> "Bug in auth middleware. Token expiry check use `<` not `<=`. Fix:"
+> "Bug no middleware auth. Check de expiração de token usa `<` não `<=`. Fix:"
 
 </td>
 </tr>
 </table>
 
-**Same fix. 75% less word. Brain still big.**
+**Mesmo fix. 75% menos palavra. Cérebro ainda grande.**
 
-**Pick your level of grunt:**
+**Escolha seu nível de grunhido:**
 
 <table>
 <tr>
@@ -83,21 +85,21 @@ Based on the viral observation that caveman-speak dramatically reduces LLM token
 
 #### 🪶 Lite
 
-> "Your component re-renders because you create a new object reference each render. Inline object props fail shallow comparison every time. Wrap it in `useMemo`."
+> "Seu componente re-renderiza porque cria uma nova referência de objeto a cada render. Props de objeto inline falham a comparação rasa toda vez. Envolve em `useMemo`."
 
 </td>
 <td width="25%">
 
 #### 🪨 Full
 
-> "New object ref each render. Inline object prop = new ref = re-render. Wrap in `useMemo`."
+> "Ref nova de objeto cada render. Prop objeto inline = ref nova = re-render. Envolve em `useMemo`."
 
 </td>
 <td width="25%">
 
 #### 🔥 Ultra
 
-> "Inline obj prop → new ref → re-render. `useMemo`."
+> "Prop obj inline → ref nova → re-render. `useMemo`."
 
 </td>
 <td width="25%">
@@ -110,108 +112,108 @@ Based on the viral observation that caveman-speak dramatically reduces LLM token
 </tr>
 </table>
 
-**Same answer. You pick how many word.**
+**Mesma resposta. Você escolhe quantas palavras.**
 
 ```
 ┌─────────────────────────────────────┐
-│  TOKENS SAVED          ████████ 75% │
-│  TECHNICAL ACCURACY    ████████ 100%│
-│  SPEED INCREASE        ████████ ~3x │
-│  VIBES                 ████████ OOG │
+│  TOKENS ECONOMIZADOS   ████████ 75% │
+│  PRECISÃO TÉCNICA      ████████ 100%│
+│  AUMENTO DE VELOCIDADE ████████ ~3x │
+│  VIBE                  ████████ OOG │
 └─────────────────────────────────────┘
 ```
 
-- **Faster response** — less token to generate = speed go brrr
-- **Easier to read** — no wall of text, just the answer
-- **Same accuracy** — all technical info kept, only fluff removed ([science say so](https://arxiv.org/abs/2604.00025))
-- **Save money** — ~71% less output token = less cost
-- **Fun** — every code review become comedy
+- **Resposta mais rápida** — menos token pra gerar = velocidade vai brrr
+- **Mais fácil de ler** — sem parede de texto, só a resposta
+- **Mesma precisão** — toda info técnica preservada, só penugem removida ([ciência diz](https://arxiv.org/abs/2604.00025))
+- **Economiza grana** — ~71% menos token de saída = menos custo
+- **Divertido** — todo code review vira comédia
 
-## Install
+## Instalação
 
-Pick your agent. One command. Done.
+Escolha seu agente. Um comando. Pronto.
 
-| Agent | Install |
+| Agente | Install |
 |-------|---------|
-| **Claude Code** | `claude plugin marketplace add JuliusBrussee/caveman && claude plugin install caveman@caveman` |
-| **Codex** | Clone repo → `/plugins` → Search "Caveman" → Install |
-| **Gemini CLI** | `gemini extensions install https://github.com/JuliusBrussee/caveman` |
-| **Cursor** | `npx skills add JuliusBrussee/caveman -a cursor` |
-| **Windsurf** | `npx skills add JuliusBrussee/caveman -a windsurf` |
-| **Copilot** | `npx skills add JuliusBrussee/caveman -a github-copilot` |
-| **Cline** | `npx skills add JuliusBrussee/caveman -a cline` |
-| **Any other** | `npx skills add JuliusBrussee/caveman` |
+| **Claude Code** | `claude plugin marketplace add alfredogazperi/cavernoso && claude plugin install caveman@caveman` |
+| **Codex** | Clone do repo → `/plugins` → Busque "Caveman" → Install |
+| **Gemini CLI** | `gemini extensions install https://github.com/alfredogazperi/cavernoso` |
+| **Cursor** | `npx skills add alfredogazperi/cavernoso -a cursor` |
+| **Windsurf** | `npx skills add alfredogazperi/cavernoso -a windsurf` |
+| **Copilot** | `npx skills add alfredogazperi/cavernoso -a github-copilot` |
+| **Cline** | `npx skills add alfredogazperi/cavernoso -a cline` |
+| **Qualquer outro** | `npx skills add alfredogazperi/cavernoso` |
 
-Install once. Use in every session for that install target after that. One rock. That it.
+Instala uma vez. Usa toda sessão nesse alvo depois disso. Uma pedra. Só isso.
 
-### What You Get
+### O que você leva
 
-Auto-activation is built in for Claude Code, Gemini CLI, and the repo-local Codex setup below. `npx skills add` installs the skill for other agents, but does **not** install repo rule/instruction files, so Caveman does not auto-start there unless you add the always-on snippet below.
+Auto-ativação vem embutida para Claude Code, Gemini CLI, e o setup do Codex local do repo abaixo. `npx skills add` instala a skill para outros agentes, mas **não** instala arquivos de rule/instrução do repo, então Caveman não auto-inicia lá a menos que você adicione o snippet always-on abaixo.
 
-| Feature | Claude Code | Codex | Gemini CLI | Cursor | Windsurf | Cline | Copilot |
+| Funcionalidade | Claude Code | Codex | Gemini CLI | Cursor | Windsurf | Cline | Copilot |
 |---------|:-----------:|:-----:|:----------:|:------:|:--------:|:-----:|:-------:|
-| Caveman mode | Y | Y | Y | Y | Y | Y | Y |
-| Auto-activate every session | Y | Y¹ | Y | —² | —² | —² | —² |
-| `/caveman` command | Y | Y¹ | Y | — | — | — | — |
-| Mode switching (lite/full/ultra) | Y | Y¹ | Y | Y³ | Y³ | — | — |
-| Statusline badge | Y⁴ | — | — | — | — | — | — |
+| Modo caveman | Y | Y | Y | Y | Y | Y | Y |
+| Auto-ativa toda sessão | Y | Y¹ | Y | —² | —² | —² | —² |
+| Comando `/caveman` | Y | Y¹ | Y | — | — | — | — |
+| Troca de modo (lite/full/ultra) | Y | Y¹ | Y | Y³ | Y³ | — | — |
+| Badge de statusline | Y⁴ | — | — | — | — | — | — |
 | caveman-commit | Y | — | Y | Y | Y | Y | Y |
 | caveman-review | Y | — | Y | Y | Y | Y | Y |
 | caveman-compress | Y | Y | Y | Y | Y | Y | Y |
 | caveman-help | Y | — | Y | Y | Y | Y | Y |
 
 > [!NOTE]
-> Auto-activation works differently per agent: Claude Code uses SessionStart hooks, this repo's Codex dogfood setup uses `.codex/hooks.json`, Gemini uses context files. Cursor/Windsurf/Cline/Copilot can be made always-on, but `npx skills add` installs only the skill, not the repo rule/instruction files.
+> Auto-ativação funciona diferente por agente: Claude Code usa hooks SessionStart, o setup dogfood do Codex neste repo usa `.codex/hooks.json`, Gemini usa arquivos de contexto. Cursor/Windsurf/Cline/Copilot podem ficar always-on, mas `npx skills add` instala só a skill, não os arquivos de rule/instrução do repo.
 >
-> ¹ Codex uses `$caveman` syntax, not `/caveman`. This repo ships `.codex/hooks.json`, so caveman auto-starts when you run Codex inside this repo. The installed plugin itself gives you `$caveman`; copy the same hook into another repo if you want always-on behavior there too. caveman-commit and caveman-review are not in the Codex plugin bundle — use the SKILL.md files directly.
-> ² Add the "Want it always on?" snippet below to those agents' system prompt or rule file if you want session-start activation.
-> ³ Cursor and Windsurf receive the full SKILL.md with all intensity levels. Mode switching works on-demand via the skill; no slash command.
-> ⁴ Available in Claude Code, but plugin install only nudges setup. Standalone `install.sh` / `install.ps1` configures it automatically when no custom `statusLine` exists.
+> ¹ Codex usa sintaxe `$caveman`, não `/caveman`. Este repo distribui `.codex/hooks.json`, então caveman auto-inicia quando você roda Codex dentro deste repo. O plugin instalado em si te dá `$caveman`; copie o mesmo hook para outro repo se quiser comportamento always-on lá também. caveman-commit e caveman-review não estão no bundle do plugin do Codex — use os arquivos SKILL.md diretamente.
+> ² Adicione o snippet "Quer sempre ligado?" abaixo ao system prompt ou arquivo de rule desses agentes se quiser ativação no início da sessão.
+> ³ Cursor e Windsurf recebem o SKILL.md completo com todos os níveis de intensidade. Troca de modo funciona sob demanda via skill; sem slash command.
+> ⁴ Disponível no Claude Code, mas install via plugin só sugere setup. Standalone `install.sh` / `install.ps1` configura automaticamente quando não existe `statusLine` customizado.
 
 <details>
-<summary><strong>Claude Code — full details</strong></summary>
+<summary><strong>Claude Code — detalhes completos</strong></summary>
 
-The plugin install gives you skills + auto-loading hooks. If no custom `statusLine` is configured, Caveman nudges Claude to offer badge setup on first session.
+O install do plugin te dá skills + hooks de auto-carregamento. Se nenhum `statusLine` customizado está configurado, Caveman sugere que Claude ofereça setup do badge na primeira sessão.
 
 ```bash
-claude plugin marketplace add JuliusBrussee/caveman
+claude plugin marketplace add alfredogazperi/cavernoso
 claude plugin install caveman@caveman
 ```
 
-**Standalone hooks (without plugin):** If you prefer not to use the plugin system:
+**Hooks standalone (sem plugin):** Se preferir não usar o sistema de plugin:
 ```bash
 # macOS / Linux / WSL
-bash <(curl -s https://raw.githubusercontent.com/JuliusBrussee/caveman/main/hooks/install.sh)
+bash <(curl -s https://raw.githubusercontent.com/alfredogazperi/cavernoso/pt-br/hooks/install.sh)
 
 # Windows (PowerShell)
-irm https://raw.githubusercontent.com/JuliusBrussee/caveman/main/hooks/install.ps1 | iex
+irm https://raw.githubusercontent.com/alfredogazperi/cavernoso/pt-br/hooks/install.ps1 | iex
 ```
 
-Or from a local clone: `bash hooks/install.sh` / `powershell -File hooks\install.ps1`
+Ou a partir de um clone local: `bash hooks/install.sh` / `powershell -File hooks\install.ps1`
 
-Uninstall: `bash hooks/uninstall.sh` or `powershell -File hooks\uninstall.ps1`
+Desinstalar: `bash hooks/uninstall.sh` ou `powershell -File hooks\uninstall.ps1`
 
-**Statusline badge:** Shows `[CAVEMAN]`, `[CAVEMAN:ULTRA]`, etc. in your Claude Code status bar.
+**Badge de statusline:** Mostra `[CAVEMAN]`, `[CAVEMAN:ULTRA]`, etc. na sua barra de status do Claude Code.
 
-- **Plugin install:** If you do not already have a custom `statusLine`, Claude should offer to configure it on first session
-- **Standalone install:** Configured automatically by `install.sh` / `install.ps1` unless you already have a custom statusline
-- **Custom statusline:** Installer leaves your existing statusline alone. See [`hooks/README.md`](hooks/README.md) for the merge snippet
+- **Install via plugin:** Se você ainda não tem `statusLine` customizado, Claude deve oferecer configurar na primeira sessão
+- **Install standalone:** Configurado automaticamente por `install.sh` / `install.ps1` a menos que você já tenha um statusline customizado
+- **Statusline customizado:** Instalador deixa seu statusline existente em paz. Veja [`hooks/README.md`](hooks/README.md) para o snippet de merge
 
 </details>
 
 <details>
-<summary><strong>Codex — full details</strong></summary>
+<summary><strong>Codex — detalhes completos</strong></summary>
 
 **macOS / Linux:**
-1. Clone repo → Open Codex in the repo directory → `/plugins` → Search "Caveman" → Install
-2. Repo-local auto-start is already wired by `.codex/hooks.json` + `.codex/config.toml`
+1. Clone do repo → Abra Codex no diretório do repo → `/plugins` → Busque "Caveman" → Install
+2. Auto-start local do repo já está conectado por `.codex/hooks.json` + `.codex/config.toml`
 
 **Windows:**
-1. Enable symlinks first: `git config --global core.symlinks true` (requires Developer Mode or admin)
-2. Clone repo → Open VS Code → Codex Settings → Plugins → find "Caveman" under local marketplace → Install → Reload Window
-3. Codex hooks are currently disabled on Windows, so use `$caveman` to start manually
+1. Habilite symlinks primeiro: `git config --global core.symlinks true` (requer Developer Mode ou admin)
+2. Clone do repo → Abra VS Code → Configurações do Codex → Plugins → encontre "Caveman" sob marketplace local → Install → Reload Window
+3. Hooks do Codex estão atualmente desabilitados no Windows, então use `$caveman` pra iniciar manualmente
 
-This repo also ships `.codex/hooks.json` and enables hooks in `.codex/config.toml`, so caveman auto-activates while you run Codex inside this repo on macOS/Linux. The installed plugin gives you `$caveman`; if you want always-on behavior in other repos too, copy the same `SessionStart` hook there and enable:
+Este repo também distribui `.codex/hooks.json` e habilita hooks em `.codex/config.toml`, então caveman auto-ativa enquanto você roda Codex dentro deste repo no macOS/Linux. O plugin instalado te dá `$caveman`; se quiser comportamento always-on em outros repos também, copie o mesmo hook `SessionStart` pra lá e habilite:
 
 ```toml
 [features]
@@ -221,61 +223,61 @@ codex_hooks = true
 </details>
 
 <details>
-<summary><strong>Gemini CLI — full details</strong></summary>
+<summary><strong>Gemini CLI — detalhes completos</strong></summary>
 
 ```bash
-gemini extensions install https://github.com/JuliusBrussee/caveman
+gemini extensions install https://github.com/alfredogazperi/cavernoso
 ```
 
-Update: `gemini extensions update caveman` · Uninstall: `gemini extensions uninstall caveman`
+Update: `gemini extensions update caveman` · Desinstalar: `gemini extensions uninstall caveman`
 
-Auto-activates via `GEMINI.md` context file. Also ships custom Gemini commands:
-- `/caveman` — switch intensity level (lite/full/ultra/wenyan)
-- `/caveman-commit` — generate terse commit message
-- `/caveman-review` — one-line code review
+Auto-ativa via arquivo de contexto `GEMINI.md`. Também distribui comandos Gemini customizados:
+- `/caveman` — troca nível de intensidade (lite/full/ultra/wenyan)
+- `/caveman-commit` — gera mensagem de commit terse
+- `/caveman-review` — code review em uma linha
 
 </details>
 
 <details>
-<summary><strong>Cursor / Windsurf / Cline / Copilot — full details</strong></summary>
+<summary><strong>Cursor / Windsurf / Cline / Copilot — detalhes completos</strong></summary>
 
-`npx skills add` installs the skill file only — it does **not** install the agent's rule/instruction file, so caveman does not auto-start. For always-on, add the "Want it always on?" snippet below to your agent's rules or system prompt.
+`npx skills add` instala só o arquivo de skill — **não** instala o arquivo de rule/instrução do agente, então caveman não auto-inicia. Para always-on, adicione o snippet "Quer sempre ligado?" abaixo às rules ou system prompt do seu agente.
 
-| Agent | Command | Not installed | Mode switching | Always-on location |
+| Agente | Comando | Não instalado | Troca de modo | Local always-on |
 |-------|---------|--------------|:--------------:|--------------------|
-| Cursor | `npx skills add JuliusBrussee/caveman -a cursor` | `.cursor/rules/caveman.mdc` | Y | Cursor rules |
-| Windsurf | `npx skills add JuliusBrussee/caveman -a windsurf` | `.windsurf/rules/caveman.md` | Y | Windsurf rules |
-| Cline | `npx skills add JuliusBrussee/caveman -a cline` | `.clinerules/caveman.md` | — | Cline rules or system prompt |
-| Copilot | `npx skills add JuliusBrussee/caveman -a github-copilot` | `.github/copilot-instructions.md` + `AGENTS.md` | — | Copilot custom instructions |
+| Cursor | `npx skills add alfredogazperi/cavernoso -a cursor` | `.cursor/rules/caveman.mdc` | Y | Rules do Cursor |
+| Windsurf | `npx skills add alfredogazperi/cavernoso -a windsurf` | `.windsurf/rules/caveman.md` | Y | Rules do Windsurf |
+| Cline | `npx skills add alfredogazperi/cavernoso -a cline` | `.clinerules/caveman.md` | — | Rules do Cline ou system prompt |
+| Copilot | `npx skills add alfredogazperi/cavernoso -a github-copilot` | `.github/copilot-instructions.md` + `AGENTS.md` | — | Instruções customizadas do Copilot |
 
-Uninstall: `npx skills remove caveman`
+Desinstalar: `npx skills remove caveman`
 
-Copilot works with Chat, Edits, and Coding Agent.
+Copilot funciona com Chat, Edits e Coding Agent.
 
 </details>
 
 <details>
-<summary><strong>Any other agent (opencode, Roo, Amp, Goose, Kiro, and 40+ more)</strong></summary>
+<summary><strong>Qualquer outro agente (opencode, Roo, Amp, Goose, Kiro, e mais 40+)</strong></summary>
 
-[npx skills](https://github.com/vercel-labs/skills) supports 40+ agents:
+[npx skills](https://github.com/vercel-labs/skills) suporta mais de 40 agentes:
 
 ```bash
-npx skills add JuliusBrussee/caveman           # auto-detect agent
-npx skills add JuliusBrussee/caveman -a amp
-npx skills add JuliusBrussee/caveman -a augment
-npx skills add JuliusBrussee/caveman -a goose
-npx skills add JuliusBrussee/caveman -a kiro-cli
-npx skills add JuliusBrussee/caveman -a roo
-# ... and many more
+npx skills add alfredogazperi/cavernoso           # auto-detecta agente
+npx skills add alfredogazperi/cavernoso -a amp
+npx skills add alfredogazperi/cavernoso -a augment
+npx skills add alfredogazperi/cavernoso -a goose
+npx skills add alfredogazperi/cavernoso -a kiro-cli
+npx skills add alfredogazperi/cavernoso -a roo
+# ... e muitos outros
 ```
 
-Uninstall: `npx skills remove caveman`
+Desinstalar: `npx skills remove caveman`
 
-> **Windows note:** `npx skills` uses symlinks by default. If symlinks fail, add `--copy`: `npx skills add JuliusBrussee/caveman --copy`
+> **Nota Windows:** `npx skills` usa symlinks por padrão. Se symlinks falharem, adicione `--copy`: `npx skills add alfredogazperi/cavernoso --copy`
 
-**Important:** These agents don't have a hook system, so caveman won't auto-start. Say `/caveman` or "talk like caveman" to activate each session.
+**Importante:** Esses agentes não têm sistema de hook, então caveman não vai auto-iniciar. Fale `/caveman` ou "talk like caveman" para ativar a cada sessão.
 
-**Want it always on?** Paste this into your agent's system prompt or rules file — caveman will be active from the first message, every session:
+**Quer sempre ligado?** Cole isto no system prompt ou arquivo de rules do seu agente — caveman fica ativo desde a primeira mensagem, toda sessão:
 
 ```
 Terse like caveman. Technical substance exact. Only fluff die.
@@ -286,92 +288,92 @@ ACTIVE EVERY RESPONSE. No revert after many turns. No filler drift.
 Code/commits/PRs: normal. Off: "stop caveman" / "normal mode".
 ```
 
-Where to put it:
-| Agent | File |
+Onde colocar:
+| Agente | Arquivo |
 |-------|------|
 | opencode | `.config/opencode/AGENTS.md` |
 | Roo | `.roo/rules/caveman.md` |
-| Amp | your workspace system prompt |
-| Others | your agent's system prompt or rules file |
+| Amp | system prompt do seu workspace |
+| Outros | system prompt ou arquivo de rules do seu agente |
 
 </details>
 
-## Usage
+## Uso
 
-Trigger with:
-- `/caveman` or Codex `$caveman`
+Dispare com:
+- `/caveman` ou Codex `$caveman`
 - "talk like caveman"
 - "caveman mode"
 - "less tokens please"
 
-Stop with: "stop caveman" or "normal mode"
+Pare com: "stop caveman" ou "normal mode"
 
-### Intensity Levels
+### Níveis de intensidade
 
-| Level | Trigger | What it do |
+| Nível | Trigger | O que faz |
 |-------|---------|------------|
-| **Lite** | `/caveman lite` | Drop filler, keep grammar. Professional but no fluff |
-| **Full** | `/caveman full` | Default caveman. Drop articles, fragments, full grunt |
-| **Ultra** | `/caveman ultra` | Maximum compression. Telegraphic. Abbreviate everything |
+| **Lite** | `/caveman lite` | Drop filler, mantém gramática. Profissional mas sem penugem |
+| **Full** | `/caveman full` | Caveman padrão. Drop artigos, fragmentos, grunhido completo |
+| **Ultra** | `/caveman ultra` | Compressão máxima. Telegráfico. Abrevia tudo |
 
-### 文言文 (Wenyan) Mode
+### Modo 文言文 (Wenyan)
 
-Classical Chinese literary compression — same technical accuracy, but in the most token-efficient written language humans ever invented.
+Compressão literária chinesa clássica — mesma precisão técnica, mas na linguagem escrita mais eficiente em tokens que os humanos já inventaram.
 
-| Level | Trigger | What it do |
+| Nível | Trigger | O que faz |
 |-------|---------|------------|
-| **Wenyan-Lite** | `/caveman wenyan-lite` | Semi-classical. Grammar intact, filler gone |
-| **Wenyan-Full** | `/caveman wenyan` | Full 文言文. Maximum classical terseness |
-| **Wenyan-Ultra** | `/caveman wenyan-ultra` | Extreme. Ancient scholar on a budget |
+| **Wenyan-Lite** | `/caveman wenyan-lite` | Semi-clássico. Gramática intacta, filler fora |
+| **Wenyan-Full** | `/caveman wenyan` | 文言文 completo. Concisão clássica máxima |
+| **Wenyan-Ultra** | `/caveman wenyan-ultra` | Extremo. Sábio antigo no orçamento |
 
-Level stick until you change it or session end.
+Nível fica até você mudar ou sessão acabar.
 
-## Caveman Skills
+## Skills do Caveman
 
 ### caveman-commit
 
-`/caveman-commit` — terse commit messages. Conventional Commits. ≤50 char subject. Why over what.
+`/caveman-commit` — mensagens de commit terse. Conventional Commits. Assunto ≤50 chars. Por quê em vez do quê.
 
 ### caveman-review
 
-`/caveman-review` — one-line PR comments: `L42: 🔴 bug: user null. Add guard.` No throat-clearing.
+`/caveman-review` — comentários de PR em uma linha: `L42: 🔴 bug: user null. Add guard.` Sem pigarrear.
 
 ### caveman-help
 
-`/caveman-help` — quick-reference card. All modes, skills, commands, one command away.
+`/caveman-help` — cartão de referência rápida. Todos os modos, skills, comandos, a um comando de distância.
 
 ### caveman-compress
 
-`/caveman:compress <filepath>` — caveman make Claude *speak* with fewer tokens. **Compress** make Claude *read* fewer tokens.
+`/caveman:compress <caminho-do-arquivo>` — caveman faz Claude *falar* com menos tokens. **Compress** faz Claude *ler* menos tokens.
 
-Your `CLAUDE.md` loads on **every session start**. Caveman Compress rewrites memory files into caveman-speak so Claude reads less — without you losing the human-readable original.
+Seu `CLAUDE.md` carrega no **início de toda sessão**. Caveman Compress reescreve arquivos de memória em estilo caveman para que Claude leia menos — sem você perder o original legível por humanos.
 
 ```
 /caveman:compress CLAUDE.md
 ```
 
 ```
-CLAUDE.md          ← compressed (Claude reads this every session — fewer tokens)
-CLAUDE.original.md ← human-readable backup (you read and edit this)
+CLAUDE.md          ← comprimido (Claude lê este toda sessão — menos tokens)
+CLAUDE.original.md ← backup legível por humanos (você lê e edita este)
 ```
 
-| File | Original | Compressed | Saved |
+| Arquivo | Original | Comprimido | Economia |
 |------|----------:|----------:|------:|
 | `claude-md-preferences.md` | 706 | 285 | **59.6%** |
 | `project-notes.md` | 1145 | 535 | **53.3%** |
 | `claude-md-project.md` | 1122 | 636 | **43.3%** |
 | `todo-list.md` | 627 | 388 | **38.1%** |
 | `mixed-with-code.md` | 888 | 560 | **36.9%** |
-| **Average** | **898** | **481** | **46%** |
+| **Média** | **898** | **481** | **46%** |
 
-Code blocks, URLs, file paths, commands, headings, dates, version numbers — anything technical passes through untouched. Only prose gets compressed. See the full [caveman-compress README](caveman-compress/README.md) for details. [Security note](./caveman-compress/SECURITY.md): Snyk flags this as High Risk due to subprocess/file patterns — it's a false positive.
+Blocos de código, URLs, caminhos de arquivo, comandos, headings, datas, números de versão — qualquer coisa técnica passa sem toque. Só a prosa é comprimida. Veja o [README completo do caveman-compress](caveman-compress/README.md) para detalhes. [Nota de segurança](./caveman-compress/SECURITY.md): Snyk flagueia isto como High Risk por causa de padrões de subprocess/arquivo — é falso positivo.
 
 ## Benchmarks
 
-Real token counts from the Claude API ([reproduce it yourself](benchmarks/)):
+Contagens reais de tokens da API Claude ([reproduza você mesmo](benchmarks/)):
 
 <!-- BENCHMARK-TABLE-START -->
-| Task | Normal (tokens) | Caveman (tokens) | Saved |
+| Tarefa | Normal (tokens) | Caveman (tokens) | Economia |
 |------|---------------:|----------------:|------:|
 | Explain React re-render bug | 1180 | 159 | 87% |
 | Fix auth middleware token expiry | 704 | 121 | 83% |
@@ -383,52 +385,52 @@ Real token counts from the Claude API ([reproduce it yourself](benchmarks/)):
 | Docker multi-stage build | 1042 | 290 | 72% |
 | Debug PostgreSQL race condition | 1200 | 232 | 81% |
 | Implement React error boundary | 3454 | 456 | 87% |
-| **Average** | **1214** | **294** | **65%** |
+| **Média** | **1214** | **294** | **65%** |
 
-*Range: 22%–87% savings across prompts.*
+*Faixa: 22%–87% de economia pelos prompts.*
 <!-- BENCHMARK-TABLE-END -->
 
 > [!IMPORTANT]
-> Caveman only affects output tokens — thinking/reasoning tokens are untouched. Caveman no make brain smaller. Caveman make *mouth* smaller. Biggest win is **readability and speed**, cost savings are a bonus.
+> Caveman só afeta tokens de saída — tokens de thinking/reasoning ficam intactos. Caveman não deixa cérebro menor. Caveman deixa *boca* menor. Maior ganho é **legibilidade e velocidade**, economia de custo é bônus.
 
-A March 2026 paper ["Brevity Constraints Reverse Performance Hierarchies in Language Models"](https://arxiv.org/abs/2604.00025) found that constraining large models to brief responses **improved accuracy by 26 percentage points** on certain benchmarks and completely reversed performance hierarchies. Verbose not always better. Sometimes less word = more correct.
+Um paper de março de 2026 ["Brevity Constraints Reverse Performance Hierarchies in Language Models"](https://arxiv.org/abs/2604.00025) descobriu que restringir modelos grandes a respostas breves **melhorou a precisão em 26 pontos percentuais** em certos benchmarks e reverteu completamente hierarquias de performance. Verboso nem sempre é melhor. Às vezes menos palavra = mais certo.
 
 ## Evals
 
-Caveman not just claim 75%. Caveman **prove** it.
+Caveman não só afirma 75%. Caveman **prova**.
 
-The `evals/` directory has a three-arm eval harness that measures real token compression against a proper control — not just "verbose vs skill" but "terse vs skill". Because comparing caveman to verbose Claude conflate the skill with generic terseness. That cheating. Caveman not cheat.
+O diretório `evals/` tem uma harness de eval de três braços que mede compressão real de tokens contra um controle próprio — não só "verboso vs skill" mas "terse vs skill". Porque comparar caveman a Claude verboso confunde a skill com concisão genérica. Isso é trapaça. Caveman não trapaceia.
 
 ```bash
-# Run the eval (needs claude CLI)
+# Roda o eval (precisa do CLI claude)
 uv run python evals/llm_run.py
 
-# Read results (no API key, runs offline)
+# Lê resultados (sem API key, roda offline)
 uv run --with tiktoken python evals/measure.py
 ```
 
-## Star This Repo
+## Dê star neste repo
 
-If caveman save you mass token, mass money — leave mass star. ⭐
+Se caveman te economizar muito token, muita grana — deixe muita estrela. ⭐
 
-[![Star History Chart](https://api.star-history.com/svg?repos=JuliusBrussee/caveman&type=Date)](https://star-history.com/#JuliusBrussee/caveman&Date)
+[![Star History Chart](https://api.star-history.com/svg?repos=alfredogazperi/cavernoso&type=Date)](https://star-history.com/#alfredogazperi/cavernoso&Date)
 
-## 🪨 The Caveman Ecosystem
+## 🪨 O Ecossistema Caveman
 
-Three tools. One philosophy: **agent do more with less**.
+Três ferramentas. Uma filosofia: **agente faz mais com menos**.
 
-| Repo | What | One-liner |
+| Repo | O que | One-liner |
 |------|------|-----------|
-| [**caveman**](https://github.com/JuliusBrussee/caveman) *(you are here)* | Output compression skill | *why use many token when few do trick* — ~75% fewer output tokens across Claude Code, Cursor, Gemini, Codex |
-| [**cavemem**](https://github.com/JuliusBrussee/cavemem) | Cross-agent persistent memory | *why agent forget when agent can remember* — compressed SQLite + MCP, local by default |
-| [**cavekit**](https://github.com/JuliusBrussee/cavekit) | Spec-driven autonomous build loop | *why agent guess when agent can know* — natural language → kits → parallel build → verified |
+| [**caveman**](https://github.com/JuliusBrussee/caveman) *(upstream)* | Skill de compressão de saída | *por que usar muito token se pouco resolve* — ~75% menos tokens de saída através de Claude Code, Cursor, Gemini, Codex |
+| [**cavemem**](https://github.com/JuliusBrussee/cavemem) | Memória persistente cross-agent | *por que agente esquece se agente pode lembrar* — SQLite comprimido + MCP, local por padrão |
+| [**cavekit**](https://github.com/JuliusBrussee/cavekit) | Loop autônomo de build spec-driven | *por que agente adivinha se agente pode saber* — linguagem natural → kits → build paralelo → verificado |
 
-They compose: **cavekit** orchestrates the build, **caveman** compresses what the agent *says*, **cavemem** compresses what the agent *remembers*. Install one, some, or all — each stands alone.
+Eles compõem: **cavekit** orquestra o build, **caveman** comprime o que o agente *fala*, **cavemem** comprime o que o agente *lembra*. Instale um, alguns ou todos — cada um é independente.
 
-## Also by Julius Brussee
+## Também por Julius Brussee
 
-- **[Revu](https://github.com/JuliusBrussee/revu-swift)** — local-first macOS study app with FSRS spaced repetition, decks, exams, and study guides. [revu.cards](https://revu.cards)
+- **[Revu](https://github.com/JuliusBrussee/revu-swift)** — app de estudo macOS local-first com repetição espaçada FSRS, decks, provas e guias de estudo. [revu.cards](https://revu.cards)
 
-## License
+## Licença
 
-MIT — free like mass mammoth on open plain.
+MIT — livre como muito mamute em planície aberta.
