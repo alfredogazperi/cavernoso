@@ -1,65 +1,65 @@
 ---
 name: caveman-commit
 description: >
-  Ultra-compressed commit message generator. Cuts noise from commit messages while preserving
-  intent and reasoning. Conventional Commits format. Subject ≤50 chars, body only when "why"
-  isn't obvious. Use when user says "write a commit", "commit message", "generate commit",
-  "/commit", or invokes /caveman-commit. Auto-triggers when staging changes.
+  Gerador de mensagens de commit ultracomprimidas. Corta ruído mantendo intenção e motivo.
+  Formato Conventional Commits. Subject ≤50 chars, body só quando o "porquê" não está óbvio.
+  Usar quando usuário disser "escreve um commit", "mensagem de commit", "gera commit",
+  "/commit" ou invocar /caveman-commit. Ativa automaticamente ao fazer staging de mudanças.
 ---
 
-Write commit messages terse and exact. Conventional Commits format. No fluff. Why over what.
+Escrever mensagens de commit secas e exatas. Formato Conventional Commits. Sem enrolação. Porquê acima do quê.
 
-## Rules
+## Regras
 
 **Subject line:**
-- `<type>(<scope>): <imperative summary>` — `<scope>` optional
+- `<type>(<scope>): <resumo no imperativo>` — `<scope>` opcional
 - Types: `feat`, `fix`, `refactor`, `perf`, `docs`, `test`, `chore`, `build`, `ci`, `style`, `revert`
-- Imperative mood: "add", "fix", "remove" — not "added", "adds", "adding"
-- ≤50 chars when possible, hard cap 72
-- No trailing period
-- Match project convention for capitalization after the colon
+- Imperativo: "adicionar", "corrigir", "remover" — não "adicionado", "corrige", "corrigindo" (em formas não-imperativas)
+- ≤50 chars quando possível, limite duro 72
+- Sem ponto final
+- Seguir convenção do projeto para capitalização depois dos dois-pontos
 
-**Body (only if needed):**
-- Skip entirely when subject is self-explanatory
-- Add body only for: non-obvious *why*, breaking changes, migration notes, linked issues
-- Wrap at 72 chars
-- Bullets `-` not `*`
-- Reference issues/PRs at end: `Closes #42`, `Refs #17`
+**Body (só se preciso):**
+- Pular totalmente quando subject é autoexplicativo
+- Adicionar body só pra: *porquê* não óbvio, breaking changes, notas de migração, issues vinculadas
+- Quebrar linha em 72 chars
+- Bullets `-` não `*`
+- Referências a issues/PRs no fim: `Closes #42`, `Refs #17`
 
-**What NEVER goes in:**
-- "This commit does X", "I", "we", "now", "currently" — the diff says what
-- "As requested by..." — use Co-authored-by trailer
-- "Generated with Claude Code" or any AI attribution
-- Emoji (unless project convention requires)
-- Restating the file name when scope already says it
+**O que NUNCA entra:**
+- "Este commit faz X", "eu", "nós", "agora", "atualmente" — o diff diz o quê
+- "Conforme solicitado por..." — usar trailer Co-authored-by
+- "Gerado com Claude Code" ou qualquer atribuição a IA
+- Emoji (a menos que convenção do projeto exija)
+- Repetir nome do arquivo quando scope já diz
 
-## Examples
+## Exemplos
 
-Diff: new endpoint for user profile with body explaining the why
-- ❌ "feat: add a new endpoint to get user profile information from the database"
+Diff: endpoint novo pra perfil de usuário com body explicando o porquê
+- ❌ "feat: adiciona um novo endpoint para buscar informações do perfil do usuário no banco"
 - ✅
   ```
   feat(api): add GET /users/:id/profile
 
-  Mobile client needs profile data without the full user payload
-  to reduce LTE bandwidth on cold-launch screens.
+  Cliente mobile precisa de dados de perfil sem o payload completo
+  de usuário para reduzir uso de LTE em cold-launch.
 
   Closes #128
   ```
 
-Diff: breaking API change
+Diff: mudança breaking de API
 - ✅
   ```
   feat(api)!: rename /v1/orders to /v1/checkout
 
-  BREAKING CHANGE: clients on /v1/orders must migrate to /v1/checkout
-  before 2026-06-01. Old route returns 410 after that date.
+  BREAKING CHANGE: clientes em /v1/orders devem migrar para /v1/checkout
+  antes de 2026-06-01. Rota antiga retorna 410 depois dessa data.
   ```
 
-## Auto-Clarity
+## Clareza automática
 
-Always include body for: breaking changes, security fixes, data migrations, anything reverting a prior commit. Never compress these into subject-only — future debuggers need the context.
+Sempre incluir body para: breaking changes, fixes de segurança, migrações de dados, qualquer coisa que reverta commit anterior. Nunca comprimir pra só subject — quem for debugar no futuro precisa do contexto.
 
-## Boundaries
+## Limites
 
-Only generates the commit message. Does not run `git commit`, does not stage files, does not amend. Output the message as a code block ready to paste. "stop caveman-commit" or "normal mode": revert to verbose commit style.
+Só gera a mensagem. Não roda `git commit`, não faz staging, não amend. Saída como bloco de código pronto pra colar. "parar caveman-commit" ou "modo normal": volta ao estilo de commit verboso.

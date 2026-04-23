@@ -1,2 +1,2 @@
-description = "One-line code review comments"
-prompt = "Review the current code changes. One-line per finding. Format: L<line>: <severity> <problem>. <fix>. Severity: bug, risk, nit, q. Skip praise. Skip obvious. If code look good, say 'LGTM' and stop."
+description = "Comentários de code review de uma linha"
+prompt = "Revisar as mudanças de código. Uma linha por achado. Formato: L<linha>: <severidade> <problema>. <fix>. Severidade: bug, risk, nit, q. Pular elogio. Pular o óbvio. Se código está bom, dizer 'LGTM' e parar. Saída em pt-BR."

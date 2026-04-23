@@ -1,59 +1,59 @@
 ---
 name: caveman-help
 description: >
-  Quick-reference card for all caveman modes, skills, and commands.
-  One-shot display, not a persistent mode. Trigger: /caveman-help,
-  "caveman help", "what caveman commands", "how do I use caveman".
+  Cartão de referência rápida pra todos os modos, skills e comandos cavernosos.
+  Display one-shot, não é modo persistente. Trigger: /caveman-help,
+  "ajuda cavernoso", "quais comandos cavernoso", "como uso cavernoso".
 ---
 
-# Caveman Help
+# Ajuda Cavernoso
 
-Display this reference card when invoked. One-shot — do NOT change mode, write flag files, or persist anything. Output in caveman style.
+Mostrar este cartão de referência quando invocado. One-shot — NÃO muda modo, não escreve flag, não persiste nada. Saída em estilo cavernoso.
 
-## Modes
+## Modos
 
-| Mode | Trigger | What change |
-|------|---------|-------------|
-| **Lite** | `/caveman lite` | Drop filler. Keep sentence structure. |
-| **Full** | `/caveman` | Drop articles, filler, pleasantries, hedging. Fragments OK. Default. |
-| **Ultra** | `/caveman ultra` | Extreme compression. Bare fragments. Tables over prose. |
-| **Wenyan-Lite** | `/caveman wenyan-lite` | Classical Chinese style, light compression. |
-| **Wenyan-Full** | `/caveman wenyan` | Full 文言文. Maximum classical terseness. |
-| **Wenyan-Ultra** | `/caveman wenyan-ultra` | Extreme. Ancient scholar on a budget. |
+| Modo | Trigger | O que muda |
+|------|---------|-----------|
+| **Lite** | `/caveman lite` | Corta filler. Mantém estrutura de frase. |
+| **Full** | `/caveman` | Corta artigos, filler, cortesias, hedging. Fragmentos OK. Padrão. |
+| **Ultra** | `/caveman ultra` | Compressão extrema. Fragmentos nus. Tabelas acima de prosa. |
+| **Wenyan-Lite** | `/caveman wenyan-lite` | Estilo chinês clássico, compressão leve. |
+| **Wenyan-Full** | `/caveman wenyan` | 文言文 completo. Concisão clássica máxima. |
+| **Wenyan-Ultra** | `/caveman wenyan-ultra` | Extremo. Sábio antigo no aperto. |
 
-Mode stick until changed or session end.
+Modo persiste até mudar ou fim da sessão.
 
 ## Skills
 
-| Skill | Trigger | What it do |
+| Skill | Trigger | O que faz |
 |-------|---------|-----------|
-| **caveman-commit** | `/caveman-commit` | Terse commit messages. Conventional Commits. ≤50 char subject. |
-| **caveman-review** | `/caveman-review` | One-line PR comments: `L42: bug: user null. Add guard.` |
-| **caveman-compress** | `/caveman:compress <file>` | Compress .md files to caveman prose. Saves ~46% input tokens. |
-| **caveman-help** | `/caveman-help` | This card. |
+| **caveman-commit** | `/caveman-commit` | Mensagens de commit secas. Conventional Commits. Subject ≤50 chars. |
+| **caveman-review** | `/caveman-review` | Comentários de PR de uma linha: `L42: bug: user null. Add guard.` |
+| **caveman-compress** | `/caveman:compress <arquivo>` | Comprime .md pra prosa cavernosa pt-BR. Economiza ~35% tokens. |
+| **caveman-help** | `/caveman-help` | Este cartão. |
 
-## Deactivate
+## Desativar
 
-Say "stop caveman" or "normal mode". Resume anytime with `/caveman`.
+Dizer "parar cavernoso" ou "modo normal". Voltar a qualquer momento com `/caveman`.
 
-## Configure Default Mode
+## Configurar modo padrão
 
-Default mode = `full`. Change it:
+Modo padrão = `full`. Mudar:
 
-**Environment variable** (highest priority):
+**Variável de ambiente** (prioridade máxima):
 ```bash
 export CAVEMAN_DEFAULT_MODE=ultra
 ```
 
-**Config file** (`~/.config/caveman/config.json`):
+**Arquivo de config** (`~/.config/caveman/config.json`):
 ```json
 { "defaultMode": "lite" }
 ```
 
-Set `"off"` to disable auto-activation on session start. User can still activate manually with `/caveman`.
+Colocar `"off"` pra desabilitar ativação automática no início da sessão. Usuário ainda ativa manualmente com `/caveman`.
 
-Resolution: env var > config file > `full`.
+Resolução: env var > arquivo de config > `full`.
 
-## More
+## Mais
 
-Full docs: https://github.com/JuliusBrussee/caveman
+Docs completos: https://github.com/alfredogazperi/cavernoso
