@@ -17,12 +17,12 @@ Se você instalou caveman standalone (sem o plugin), pode usar `bash hooks/insta
 
 - Dispara em todo prompt do usuário, checa por comandos `/caveman`
 - Escreve o modo ativo no arquivo de flag quando um comando caveman é detectado
-- Suporta: `full`, `lite`, `ultra`, `wenyan`, `wenyan-lite`, `wenyan-ultra`, `commit`, `review`, `compress`
+- Suporta: `full`, `lite`, `ultra`, `commit`, `review`, `compress`
 
 ### `caveman-statusline.sh` / `caveman-statusline.ps1` — script de badge de statusline
 
 - Lê `~/.claude/.caveman-active` e imprime um badge colorido
-- Mostra `[CAVEMAN]`, `[CAVEMAN:ULTRA]`, `[CAVEMAN:WENYAN]`, etc.
+- Mostra `[CAVEMAN]`, `[CAVEMAN:ULTRA]`, etc.
 
 ## Badge de Statusline
 
@@ -75,7 +75,6 @@ fi
 Exemplos de badge:
 - `/caveman` → `[CAVEMAN]`
 - `/caveman ultra` → `[CAVEMAN:ULTRA]`
-- `/caveman wenyan` → `[CAVEMAN:WENYAN]`
 - `/caveman-commit` → `[CAVEMAN:COMMIT]`
 - `/caveman-review` → `[CAVEMAN:REVIEW]`
 

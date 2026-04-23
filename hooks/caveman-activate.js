@@ -44,8 +44,7 @@ if (INDEPENDENT_MODES.has(mode)) {
   process.exit(0);
 }
 
-// Resolve the canonical label for wenyan alias
-const modeLabel = mode === 'wenyan' ? 'wenyan-full' : mode;
+const modeLabel = mode;
 
 // Read SKILL.md — the single source of truth for caveman behavior.
 // Plugin installs: __dirname = <plugin_root>/hooks/, SKILL.md at <plugin_root>/skills/caveman/SKILL.md

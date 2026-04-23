@@ -17,9 +17,6 @@ Mostrar este cartão de referência quando invocado. One-shot — NÃO muda modo
 | **Lite** | `/caveman lite` | Corta filler. Mantém estrutura de frase. |
 | **Full** | `/caveman` | Corta artigos, filler, cortesias, hedging. Fragmentos OK. Padrão. |
 | **Ultra** | `/caveman ultra` | Compressão extrema. Fragmentos nus. Tabelas acima de prosa. |
-| **Wenyan-Lite** | `/caveman wenyan-lite` | Estilo chinês clássico, compressão leve. |
-| **Wenyan-Full** | `/caveman wenyan` | 文言文 completo. Concisão clássica máxima. |
-| **Wenyan-Ultra** | `/caveman wenyan-ultra` | Extremo. Sábio antigo no aperto. |
 
 Modo persiste até mudar ou fim da sessão.
 

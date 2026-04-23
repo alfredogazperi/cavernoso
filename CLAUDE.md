@@ -29,7 +29,7 @@ Caveman faz agentes de IA de código responderem em prosa estilo caveman comprim
 
 | Arquivo | O que controla |
 |------|-----------------|
-| `skills/caveman/SKILL.md` | Comportamento do caveman: níveis de intensidade, regras, modo wenyan, auto-clareza, persistência. Único arquivo a editar para mudanças de comportamento. |
+| `skills/caveman/SKILL.md` | Comportamento do caveman: níveis de intensidade, regras, auto-clareza, persistência. Único arquivo a editar para mudanças de comportamento. |
 | `rules/caveman-activate.md` | Corpo da regra de auto-ativação always-on. CI injeta nos arquivos de rule de Cursor, Windsurf, Cline, Copilot. Edite aqui, não nas cópias específicas por agente. |
 | `skills/caveman-commit/SKILL.md` | Comportamento de mensagem de commit do caveman. Skill totalmente independente. |
 | `skills/caveman-review/SKILL.md` | Comportamento de code review do caveman. Skill totalmente independente. |
@@ -108,9 +108,6 @@ Lê JSON do stdin. Três responsabilidades:
 - `/caveman` → padrão configurado (veja `caveman-config.js`, default `full`)
 - `/caveman lite` → `lite`
 - `/caveman ultra` → `ultra`
-- `/caveman wenyan` ou `/caveman wenyan-full` → `wenyan`
-- `/caveman wenyan-lite` → `wenyan-lite`
-- `/caveman wenyan-ultra` → `wenyan-ultra`
 - `/caveman-commit` → `commit`
 - `/caveman-review` → `review`
 - `/caveman-compress` → `compress`
@@ -143,7 +140,7 @@ Skills = arquivos Markdown com frontmatter YAML consumidos pelo sistema de skill
 
 ### Níveis de intensidade
 
-Definidos em `skills/caveman/SKILL.md`. Seis níveis: `lite`, `full` (padrão), `ultra`, `wenyan-lite`, `wenyan-full`, `wenyan-ultra`. Persiste até mudar ou sessão acabar.
+Definidos em `skills/caveman/SKILL.md`. Três níveis: `lite`, `full` (padrão), `ultra`. Persiste até mudar ou sessão acabar.
 
 ### Regra de auto-clareza
 

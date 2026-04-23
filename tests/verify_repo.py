@@ -288,12 +288,12 @@ def verify_hook_install_flow() -> None:
         )
         ensure(not (claude_dir / ".caveman-active").exists(), "normal mode should remove flag file")
 
-        (claude_dir / ".caveman-active").write_text("wenyan-ultra")
+        (claude_dir / ".caveman-active").write_text("ultra")
         statusline = run(
             ["bash", "hooks/caveman-statusline.sh"],
             env={"HOME": str(home)},
         )
-        ensure("[CAVEMAN:WENYAN-ULTRA]" in statusline.stdout, "statusline badge output mismatch")
+        ensure("[CAVEMAN:ULTRA]" in statusline.stdout, "statusline badge output mismatch")
 
         reinstall = run(["bash", "hooks/install.sh"], env={"HOME": str(home)})
         ensure("Nothing to do" in reinstall.stdout, "install.sh should be idempotent")
