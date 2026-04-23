@@ -17,12 +17,17 @@ process.stdin.on('end', () => {
     const data = JSON.parse(input);
     const prompt = (data.prompt || '').trim().toLowerCase();
 
-    // Natural language activation (e.g. "activate caveman", "turn on caveman mode",
-    // "talk like caveman"). README tells users they can say these, but the hook
-    // only matched /caveman commands — flag file and statusline stayed out of sync.
-    if (/\b(activate|enable|turn on|start|talk like)\b.*\bcaveman\b/i.test(prompt) ||
-        /\bcaveman\b.*\b(mode|activate|enable|turn on|start)\b/i.test(prompt)) {
-      if (!/\b(stop|disable|turn off|deactivate)\b/i.test(prompt)) {
+    // Natural language activation — EN and pt-BR.
+    // EN: "activate caveman", "turn on caveman mode", "talk like caveman"
+    // pt-BR: "ativar cavernoso", "ligar modo cavernoso", "fala como cavernoso"
+    const EN_ACTIVATE = /\b(activate|enable|turn on|start|talk like)\b.*\b(caveman|cavernoso)\b/i;
+    const EN_ACTIVATE_REV = /\b(caveman|cavernoso)\b.*\b(mode|activate|enable|turn on|start)\b/i;
+    const PT_ACTIVATE = /\b(ativa|ativar|liga|ligar|ativa o|ligar o|fala como|falar como|entra no modo)\b.*\b(cavernoso|caveman)\b/i;
+    const PT_ACTIVATE_REV = /\b(cavernoso|caveman)\b.*\b(modo|ativa|ativar|liga|ligar)\b/i;
+
+    if (EN_ACTIVATE.test(prompt) || EN_ACTIVATE_REV.test(prompt) ||
+        PT_ACTIVATE.test(prompt) || PT_ACTIVATE_REV.test(prompt)) {
+      if (!/\b(stop|disable|turn off|deactivate|para|desliga|desligar|desativa|desativar|sai do modo)\b/i.test(prompt)) {
         const mode = getDefaultMode();
         if (mode !== 'off') {
           safeWriteFlag(flagPath, mode);
@@ -60,10 +65,13 @@ process.stdin.on('end', () => {
       }
     }
 
-    // Detect deactivation — natural language and slash commands
-    if (/\b(stop|disable|deactivate|turn off)\b.*\bcaveman\b/i.test(prompt) ||
-        /\bcaveman\b.*\b(stop|disable|deactivate|turn off)\b/i.test(prompt) ||
-        /\bnormal mode\b/i.test(prompt)) {
+    // Detect deactivation — EN + pt-BR, natural language and slash commands
+    if (/\b(stop|disable|deactivate|turn off)\b.*\b(caveman|cavernoso)\b/i.test(prompt) ||
+        /\b(caveman|cavernoso)\b.*\b(stop|disable|deactivate|turn off)\b/i.test(prompt) ||
+        /\b(para|parar|desliga|desligar|desativa|desativar|sai do modo)\b.*\b(caveman|cavernoso)\b/i.test(prompt) ||
+        /\b(caveman|cavernoso)\b.*\b(para|parar|desliga|desligar|desativa|desativar)\b/i.test(prompt) ||
+        /\bnormal mode\b/i.test(prompt) ||
+        /\bmodo normal\b/i.test(prompt)) {
       try { fs.unlinkSync(flagPath); } catch (e) {}
     }
 
@@ -84,9 +92,9 @@ process.stdin.on('end', () => {
       process.stdout.write(JSON.stringify({
         hookSpecificOutput: {
           hookEventName: "UserPromptSubmit",
-          additionalContext: "CAVEMAN MODE ACTIVE (" + activeMode + "). " +
-            "Drop articles/filler/pleasantries/hedging. Fragments OK. " +
-            "Code/commits/security: write normal."
+          additionalContext: "MODO CAVERNOSO ATIVO (" + activeMode + "). " +
+            "Cortar artigos/filler/cortesias/hedging. Fragmentos OK. " +
+            "Código/commits/segurança: escrever normal."
         }
       }));
     }

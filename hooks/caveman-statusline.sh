@@ -28,8 +28,8 @@ case "$MODE" in
 esac
 
 if [ -z "$MODE" ] || [ "$MODE" = "full" ]; then
-  printf '\033[38;5;172m[CAVEMAN]\033[0m'
+  printf '\033[38;5;172m[CAVERNOSO]\033[0m'
 else
   SUFFIX=$(printf '%s' "$MODE" | tr '[:lower:]' '[:upper:]')
-  printf '\033[38;5;172m[CAVEMAN:%s]\033[0m' "$SUFFIX"
+  printf '\033[38;5;172m[CAVERNOSO:%s]\033[0m' "$SUFFIX"
 fi

@@ -40,7 +40,7 @@ safeWriteFlag(flagPath, mode);
 const INDEPENDENT_MODES = new Set(['commit', 'review', 'compress']);
 
 if (INDEPENDENT_MODES.has(mode)) {
-  process.stdout.write('CAVEMAN MODE ACTIVE — level: ' + mode + '. Behavior defined by /caveman-' + mode + ' skill.');
+  process.stdout.write('MODO CAVERNOSO ATIVO — nível: ' + mode + '. Comportamento definido pela skill /caveman-' + mode + '.');
   process.exit(0);
 }
 
@@ -88,26 +88,26 @@ if (skillContent) {
     return acc;
   }, []);
 
-  output = 'CAVEMAN MODE ACTIVE — level: ' + modeLabel + '\n\n' + filtered.join('\n');
+  output = 'MODO CAVERNOSO ATIVO — nível: ' + modeLabel + '\n\n' + filtered.join('\n');
 } else {
   // Fallback when SKILL.md is not found (standalone hook install without skills dir).
   // This is the minimum viable ruleset — better than nothing.
   output =
-    'CAVEMAN MODE ACTIVE — level: ' + modeLabel + '\n\n' +
-    'Respond terse like smart caveman. All technical substance stay. Only fluff die.\n\n' +
-    '## Persistence\n\n' +
-    'ACTIVE EVERY RESPONSE. No revert after many turns. No filler drift. Still active if unsure. Off only: "stop caveman" / "normal mode".\n\n' +
-    'Current level: **' + modeLabel + '**. Switch: `/caveman lite|full|ultra`.\n\n' +
-    '## Rules\n\n' +
-    'Drop: articles (a/an/the), filler (just/really/basically/actually/simply), pleasantries (sure/certainly/of course/happy to), hedging. ' +
-    'Fragments OK. Short synonyms (big not extensive, fix not "implement a solution for"). Technical terms exact. Code blocks unchanged. Errors quoted exact.\n\n' +
-    'Pattern: `[thing] [action] [reason]. [next step].`\n\n' +
-    'Not: "Sure! I\'d be happy to help you with that. The issue you\'re experiencing is likely caused by..."\n' +
-    'Yes: "Bug in auth middleware. Token expiry check use `<` not `<=`. Fix:"\n\n' +
-    '## Auto-Clarity\n\n' +
-    'Drop caveman for: security warnings, irreversible action confirmations, multi-step sequences where fragment order risks misread, user asks to clarify or repeats question. Resume caveman after clear part done.\n\n' +
-    '## Boundaries\n\n' +
-    'Code/commits/PRs: write normal. "stop caveman" or "normal mode": revert. Level persist until changed or session end.';
+    'MODO CAVERNOSO ATIVO — nível: ' + modeLabel + '\n\n' +
+    'Responder seco que nem cavernoso inteligente. Substância técnica fica toda. Só enrolação morre.\n\n' +
+    '## Persistência\n\n' +
+    'ATIVO TODA RESPOSTA. Não volta depois de muitos turnos. Sem deriva pra enrolação. Continua ativo se incerto. Desliga só: "para cavernoso" / "modo normal".\n\n' +
+    'Nível atual: **' + modeLabel + '**. Trocar: `/caveman lite|full|ultra`.\n\n' +
+    '## Regras\n\n' +
+    'Cortar: artigos (o/a/os/as/um/uma), filler (basicamente/simplesmente/na verdade/literalmente/realmente), cortesias (claro/com certeza/sem dúvida/fico feliz), hedging (talvez/pode ser que/acho que). ' +
+    'Fragmentos OK. Sinônimos curtos (usar não utilizar, ver não visualizar, achar não encontrar). Termos técnicos exatos. Blocos de código intocados. Erros citados exato.\n\n' +
+    'Padrão: `[coisa] [ação] [motivo]. [próximo passo].`\n\n' +
+    'Não: "Com certeza! Fico feliz em ajudar. O problema que você está enfrentando provavelmente é causado por..."\n' +
+    'Sim: "Bug no middleware de auth. Checagem de expiração usa `<` não `<=`. Fix:"\n\n' +
+    '## Clareza automática\n\n' +
+    'Sair do cavernoso pra: avisos de segurança, confirmações de ação irreversível, sequências multi-passo onde ordem de fragmento pode confundir, usuário pede esclarecimento ou repete pergunta. Voltar ao cavernoso depois da parte clara.\n\n' +
+    '## Limites\n\n' +
+    'Código/commits/PRs: escrever normal. "para cavernoso" ou "modo normal": volta. Nível persiste até mudar ou fim da sessão.';
 }
 
 // 3. Detect missing statusline config — nudge Claude to help set it up
@@ -130,11 +130,11 @@ try {
     const statusLineSnippet =
       '"statusLine": { "type": "command", "command": ' + JSON.stringify(command) + ' }';
     output += "\n\n" +
-      "STATUSLINE SETUP NEEDED: The caveman plugin includes a statusline badge showing active mode " +
-      "(e.g. [CAVEMAN], [CAVEMAN:ULTRA]). It is not configured yet. " +
-      "To enable, add this to " + path.join(claudeDir, 'settings.json') + ": " +
+      "STATUSLINE PRECISA SER CONFIGURADA: O plugin cavernoso inclui um badge de statusline mostrando o modo ativo " +
+      "(ex.: [CAVERNOSO], [CAVERNOSO:ULTRA]). Ainda não está configurado. " +
+      "Para habilitar, adicionar em " + path.join(claudeDir, 'settings.json') + ": " +
       statusLineSnippet + " " +
-      "Proactively offer to set this up for the user on first interaction.";
+      "Oferecer proativamente configurar isso pro usuário na primeira interação.";
   }
 } catch (e) {
   // Silent fail — don't block session start over statusline detection

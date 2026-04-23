@@ -32,8 +32,8 @@ if (-not ($Valid -contains $Mode)) { exit 0 }
 
 $Esc = [char]27
 if ([string]::IsNullOrEmpty($Mode) -or $Mode -eq "full") {
-    [Console]::Write("${Esc}[38;5;172m[CAVEMAN]${Esc}[0m")
+    [Console]::Write("${Esc}[38;5;172m[CAVERNOSO]${Esc}[0m")
 } else {
     $Suffix = $Mode.ToUpperInvariant()
-    [Console]::Write("${Esc}[38;5;172m[CAVEMAN:$Suffix]${Esc}[0m")
+    [Console]::Write("${Esc}[38;5;172m[CAVERNOSO:$Suffix]${Esc}[0m")
 }
