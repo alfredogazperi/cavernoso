@@ -19,13 +19,18 @@ process.stdin.on('end', () => {
 
     // Natural language activation — pt-BR only (foco do fork).
     // pt-BR: "ativa cavernoso", "liga modo cavernoso", "fala como cavernoso", "modo cavernoso"
-    const PT_DEACTIVATE = /\b(para|parar|desliga|desligar|desativa|desativar|sai do modo)\b/i;
+    //
+    // Detecção de desativação aqui é estrita pra não casar com "para" preposição
+    // (comum: "configurar X para Y", "para toda sessão"). Ver PT_DEACTIVATE_STRICT
+    // abaixo — só "parar", "desliga*", "desativa*", "sai do modo", ou "para" verbo
+    // seguido direto de "cavernoso" (com "o" opcional).
+    const PT_DEACTIVATE_STRICT = /(?:^|[,.:;!?]\s*)para\s+(?:o\s+)?cavernoso\b|\b(parar|desliga(?:r)?|desativa(?:r)?|sai do modo)\b.*\bcavernoso\b|\bcavernoso\b[\s,.:;!?-]*\b(parar|desliga(?:r)?|desativa(?:r)?)\b|\bcavernoso\b[\s,.:;!?-]*\bpara(?=[\s,.:;!?-]*$)|\bmodo normal\b|^\s*para\s*$/i;
     const PT_ACTIVATE = /\b(ativa|ativar|liga|ligar|fala como|falar como|entra no modo)\b.*\bcavernoso\b/i;
     const PT_ACTIVATE_REV = /\bcavernoso\b.*\b(modo|ativa|ativar|liga|ligar)\b/i;
     const PT_MODO_CAVERNOSO = /\bmodo cavernoso\b/i;
 
     if ((PT_ACTIVATE.test(prompt) || PT_ACTIVATE_REV.test(prompt) || PT_MODO_CAVERNOSO.test(prompt))
-        && !PT_DEACTIVATE.test(prompt)) {
+        && !PT_DEACTIVATE_STRICT.test(prompt)) {
       const mode = getDefaultMode();
       if (mode !== 'off') {
         safeWriteFlag(flagPath, mode);
@@ -61,10 +66,35 @@ process.stdin.on('end', () => {
     }
 
     // Detect deactivation — pt-BR natural language.
-    // Triggers: "para", "para cavernoso", "desliga", "desliga cavernoso",
-    // "desativa cavernoso", "modo normal", "sai do modo cavernoso".
-    if (/\b(para|parar|desliga|desligar|desativa|desativar|sai do modo)\b.*\bcavernoso\b/i.test(prompt) ||
-        /\bcavernoso\b.*\b(para|parar|desliga|desligar|desativa|desativar)\b/i.test(prompt) ||
+    // Triggers: "para cavernoso", "parar cavernoso", "desliga cavernoso",
+    // "desativa cavernoso", "modo normal", "sai do modo cavernoso",
+    // ou só "para" isolado.
+    //
+    // ATENÇÃO: "para" preposição é altamente frequente em pt-BR ("para toda
+    // sessão", "configurar para que", "para ativar X"). Regex exige:
+    //   (a) verbo de desativação + "cavernoso" como complemento direto, OU
+    //   (b) "cavernoso" + verbo de desativação logo depois, OU
+    //   (c) "modo normal" explícito, OU
+    //   (d) prompt inteiro sendo literalmente "para".
+    //
+    // Para evitar falso positivo de "para" preposição ("para toda sessão iniciar
+    // no modo cavernoso"), só conta "para" como verbo de desativação quando
+    // vem IMEDIATAMENTE antes de "cavernoso" (com artigo "o" opcional).
+    // Verbos inequívocos ("parar", "desliga*", "desativa*") mantêm o padrão
+    // "verbo ... cavernoso" mais permissivo.
+    // "para cavernoso" / "para o cavernoso" — imperativo, desativa.
+    const PARA_DESATIVA = /(?:^|[,.:;!?]\s*)para\s+(?:o\s+)?cavernoso\b/i;
+    // "parar cavernoso" / "desliga cavernoso" / etc. — verbos inequívocos.
+    const VERBO_DESATIVA_CAVERNOSO = /\b(parar|desliga(?:r)?|desativa(?:r)?|sai do modo)\b.*\bcavernoso\b/i;
+    // "cavernoso para" / "cavernoso, para." — "para" ambíguo, só conta se for fim de frase
+    // (pontuação terminal ou fim da string). "cavernoso para toda sessão" NÃO casa.
+    const CAVERNOSO_PARA_FIM = /\bcavernoso\b[\s,.:;!?-]*\bpara(?=[\s,.:;!?-]*$)/i;
+    // "cavernoso desliga" / "cavernoso, desativa" — verbos inequívocos, direto após cavernoso.
+    const CAVERNOSO_VERBO_DESATIVA = /\bcavernoso\b[\s,.:;!?-]*\b(parar|desliga(?:r)?|desativa(?:r)?)\b/i;
+    if (PARA_DESATIVA.test(prompt) ||
+        VERBO_DESATIVA_CAVERNOSO.test(prompt) ||
+        CAVERNOSO_VERBO_DESATIVA.test(prompt) ||
+        CAVERNOSO_PARA_FIM.test(prompt) ||
         /\bmodo normal\b/i.test(prompt) ||
         /^\s*para\s*$/i.test(prompt)) {
       try { fs.unlinkSync(flagPath); } catch (e) {}
